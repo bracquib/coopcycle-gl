@@ -1,0 +1,32 @@
+{
+  "coopcycleApp": {
+    "commande": {
+      "home": {
+        "title": "Commandes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Genera un nuovo Commande",
+        "createOrEditLabel": "Genera o modifica un Commande",
+        "notFound": "No Commandes found"
+      },
+      "created": "&Egrave; stato generato un nuovo Commande con identificatore {{ param }}",
+      "updated": "&Egrave; stato aggiornato Commande identificato da {{ param }}",
+      "deleted": "&Egrave; stato eliminato Commande con identificatore {{ param }}",
+      "delete": {
+        "question": "Sei sicuro di volere eliminare Commande {{ id }}?"
+      },
+      "detail": {
+        "title": "Commande"
+      },
+      "id": "ID",
+      "creationDate": "Creation Date",
+      "deliveryDate": "Delivery Date",
+      "status": "Status",
+      "client": "Client",
+      "restaurant": "Restaurant",
+      "livreur": "Livreur",
+      "client": "Client",
+      "restaurant": "Restaurant",
+      "livreur": "Livreur"
+    }
+  }
+}

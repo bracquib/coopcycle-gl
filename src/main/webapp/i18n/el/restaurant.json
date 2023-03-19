@@ -1,0 +1,25 @@
+{
+  "coopcycleApp": {
+    "restaurant": {
+      "home": {
+        "title": "Restaurants",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Δημιουργήστε ένα νέο Restaurant",
+        "createOrEditLabel": "Δημιουργήστε η επεξεργαστείτε ένα Restaurant",
+        "notFound": "No Restaurants found"
+      },
+      "created": "Ένα νέο Restaurant έχει δημιουργηθεί με αναγνωριστικό {{ param }}",
+      "updated": "Ένα Restaurant έχει ενημερωθεί με αναγνωριστικό {{ param }}",
+      "deleted": "Ένα Restaurant έχει διαγραφτεί με αναγνωριστικό {{ param }}",
+      "delete": {
+        "question": "Είστε βέβαιοι όταν θέλετε να διαγράψετε το ακόλουθο Restaurant {{ id }};"
+      },
+      "detail": {
+        "title": "Restaurant"
+      },
+      "id": "ID",
+      "name": "Name",
+      "address": "Address"
+    }
+  }
+}

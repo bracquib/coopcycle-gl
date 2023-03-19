@@ -1,0 +1,80 @@
+// Client
+entity Client {
+    name String required minlength(2) maxlength(50),
+    surname String required minlength(2) maxlength(50),
+    email String required pattern(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/),
+    phonenumber String pattern(/^([0-9]{2}[ -]?){4}[0-9]{2}$/),
+    address String required
+}
+
+// Restaurant
+entity Restaurant {
+    name String required minlength(2) maxlength(50),
+    address String required
+}
+
+// Livreur
+entity Livreur {
+    name String required minlength(2) maxlength(50),
+    surname String required minlength(2) maxlength(50),
+    email String required pattern(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/),
+    phonenumber String pattern(/^([0-9]{2}[ -]?){4}[0-9]{2}$/),
+    vehicleType String required,
+    commandState String required
+}
+
+// Sociétaire
+entity Societaire {
+    client String required,
+    restaurant String,
+    livreur String
+}
+
+// Commande
+entity Commande {
+    creationDate String required,
+    deliveryDate String,
+    status String required,
+    client String required,
+    restaurant String required,
+    livreur String
+}
+
+// Panier
+entity Panier {
+    client String required,
+    commande String required
+}
+
+entity PlateformePaiement {
+    amount String required,
+    paymentType TypePaiement required,
+    description String
+}
+
+enum TypePaiement {
+    CB,
+    VISA,
+    IZLY,
+    Mastercard,
+    Apple_Pay,
+    Google_Pay,
+    Paypal, 
+    Cheques_Restaurant,
+    Bitcoin,
+    Izly
+}
+
+// Relation ManyToOne
+relationship ManyToOne {
+    Commande{client} to Client,
+    Commande{restaurant} to Restaurant,
+    Commande{livreur} to Livreur,
+    Panier{client} to Client,
+    Panier{commande} to Commande,
+    Societaire{client} to Client,
+    Societaire{restaurant} to Restaurant,
+    Societaire{livreur} to Livreur,
+    PlateformePaiement{commande} to Commande,
+}
+dto * with mapstruct

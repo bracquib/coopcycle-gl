@@ -1,0 +1,45 @@
+{
+  "applications": "*",
+  "changelogDate": "20230319213045",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "societaire",
+  "fields": [
+    {
+      "fieldName": "client",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "restaurant",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "livreur",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Societaire",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "client",
+      "relationshipName": "client",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "restaurant",
+      "relationshipName": "restaurant",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "livreur",
+      "relationshipName": "livreur",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

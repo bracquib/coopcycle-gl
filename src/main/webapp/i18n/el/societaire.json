@@ -1,0 +1,29 @@
+{
+  "coopcycleApp": {
+    "societaire": {
+      "home": {
+        "title": "Societaires",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Δημιουργήστε ένα νέο Societaire",
+        "createOrEditLabel": "Δημιουργήστε η επεξεργαστείτε ένα Societaire",
+        "notFound": "No Societaires found"
+      },
+      "created": "Ένα νέο Societaire έχει δημιουργηθεί με αναγνωριστικό {{ param }}",
+      "updated": "Ένα Societaire έχει ενημερωθεί με αναγνωριστικό {{ param }}",
+      "deleted": "Ένα Societaire έχει διαγραφτεί με αναγνωριστικό {{ param }}",
+      "delete": {
+        "question": "Είστε βέβαιοι όταν θέλετε να διαγράψετε το ακόλουθο Societaire {{ id }};"
+      },
+      "detail": {
+        "title": "Societaire"
+      },
+      "id": "ID",
+      "client": "Client",
+      "restaurant": "Restaurant",
+      "livreur": "Livreur",
+      "client": "Client",
+      "restaurant": "Restaurant",
+      "livreur": "Livreur"
+    }
+  }
+}

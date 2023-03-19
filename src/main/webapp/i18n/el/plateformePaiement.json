@@ -1,0 +1,27 @@
+{
+  "coopcycleApp": {
+    "plateformePaiement": {
+      "home": {
+        "title": "Plateforme Paiements",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Δημιουργήστε ένα νέο Plateforme Paiement",
+        "createOrEditLabel": "Δημιουργήστε η επεξεργαστείτε ένα Plateforme Paiement",
+        "notFound": "No Plateforme Paiements found"
+      },
+      "created": "Ένα νέο Plateforme Paiement έχει δημιουργηθεί με αναγνωριστικό {{ param }}",
+      "updated": "Ένα Plateforme Paiement έχει ενημερωθεί με αναγνωριστικό {{ param }}",
+      "deleted": "Ένα Plateforme Paiement έχει διαγραφτεί με αναγνωριστικό {{ param }}",
+      "delete": {
+        "question": "Είστε βέβαιοι όταν θέλετε να διαγράψετε το ακόλουθο Plateforme Paiement {{ id }};"
+      },
+      "detail": {
+        "title": "Plateforme Paiement"
+      },
+      "id": "ID",
+      "amount": "Amount",
+      "paymentType": "Payment Type",
+      "description": "Description",
+      "commande": "Commande"
+    }
+  }
+}

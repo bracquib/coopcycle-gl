@@ -1,0 +1,27 @@
+{
+  "coopcycleApp": {
+    "plateformePaiement": {
+      "home": {
+        "title": "Plateforme Paiements",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Plateforme Paiement erstellen",
+        "createOrEditLabel": "Plateforme Paiement erstellen oder bearbeiten",
+        "notFound": "Keine Plateforme Paiements gefunden"
+      },
+      "created": "Plateforme Paiement erstellt mit ID {{ param }}",
+      "updated": "Plateforme Paiement aktualisiert mit ID {{ param }}",
+      "deleted": "Plateforme Paiement gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Plateforme Paiement {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Plateforme Paiement"
+      },
+      "id": "ID",
+      "amount": "Amount",
+      "paymentType": "Payment Type",
+      "description": "Description",
+      "commande": "Commande"
+    }
+  }
+}

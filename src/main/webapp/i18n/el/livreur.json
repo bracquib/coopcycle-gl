@@ -1,0 +1,29 @@
+{
+  "coopcycleApp": {
+    "livreur": {
+      "home": {
+        "title": "Livreurs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Δημιουργήστε ένα νέο Livreur",
+        "createOrEditLabel": "Δημιουργήστε η επεξεργαστείτε ένα Livreur",
+        "notFound": "No Livreurs found"
+      },
+      "created": "Ένα νέο Livreur έχει δημιουργηθεί με αναγνωριστικό {{ param }}",
+      "updated": "Ένα Livreur έχει ενημερωθεί με αναγνωριστικό {{ param }}",
+      "deleted": "Ένα Livreur έχει διαγραφτεί με αναγνωριστικό {{ param }}",
+      "delete": {
+        "question": "Είστε βέβαιοι όταν θέλετε να διαγράψετε το ακόλουθο Livreur {{ id }};"
+      },
+      "detail": {
+        "title": "Livreur"
+      },
+      "id": "ID",
+      "name": "Name",
+      "surname": "Surname",
+      "email": "Email",
+      "phonenumber": "Phonenumber",
+      "vehicleType": "Vehicle Type",
+      "commandState": "Command State"
+    }
+  }
+}

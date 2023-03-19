@@ -1,0 +1,29 @@
+{
+  "coopcycleApp": {
+    "livreur": {
+      "home": {
+        "title": "Livreurs",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Livreur erstellen",
+        "createOrEditLabel": "Livreur erstellen oder bearbeiten",
+        "notFound": "Keine Livreurs gefunden"
+      },
+      "created": "Livreur erstellt mit ID {{ param }}",
+      "updated": "Livreur aktualisiert mit ID {{ param }}",
+      "deleted": "Livreur gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Livreur {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Livreur"
+      },
+      "id": "ID",
+      "name": "Name",
+      "surname": "Surname",
+      "email": "Email",
+      "phonenumber": "Phonenumber",
+      "vehicleType": "Vehicle Type",
+      "commandState": "Command State"
+    }
+  }
+}

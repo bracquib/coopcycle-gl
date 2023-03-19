@@ -1,0 +1,27 @@
+{
+  "coopcycleApp": {
+    "panier": {
+      "home": {
+        "title": "Paniers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Δημιουργήστε ένα νέο Panier",
+        "createOrEditLabel": "Δημιουργήστε η επεξεργαστείτε ένα Panier",
+        "notFound": "No Paniers found"
+      },
+      "created": "Ένα νέο Panier έχει δημιουργηθεί με αναγνωριστικό {{ param }}",
+      "updated": "Ένα Panier έχει ενημερωθεί με αναγνωριστικό {{ param }}",
+      "deleted": "Ένα Panier έχει διαγραφτεί με αναγνωριστικό {{ param }}",
+      "delete": {
+        "question": "Είστε βέβαιοι όταν θέλετε να διαγράψετε το ακόλουθο Panier {{ id }};"
+      },
+      "detail": {
+        "title": "Panier"
+      },
+      "id": "ID",
+      "client": "Client",
+      "commande": "Commande",
+      "client": "Client",
+      "commande": "Commande"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "coopcycleApp": {
+    "client": {
+      "home": {
+        "title": "Clients",
+        "refreshListLabel": "Liste aktualisieren",
+        "createLabel": "Client erstellen",
+        "createOrEditLabel": "Client erstellen oder bearbeiten",
+        "notFound": "Keine Clients gefunden"
+      },
+      "created": "Client erstellt mit ID {{ param }}",
+      "updated": "Client aktualisiert mit ID {{ param }}",
+      "deleted": "Client gelöscht mit ID {{ param }}",
+      "delete": {
+        "question": "Soll Client {{ id }} wirklich dauerhaft gelöscht werden?"
+      },
+      "detail": {
+        "title": "Client"
+      },
+      "id": "ID",
+      "name": "Name",
+      "surname": "Surname",
+      "email": "Email",
+      "phonenumber": "Phonenumber",
+      "address": "Address"
+    }
+  }
+}
