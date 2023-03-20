@@ -23,9 +23,6 @@
       "status": "Status",
       "client": "Client",
       "restaurant": "Restaurant",
-      "livreur": "Livreur",
-      "client": "Client",
-      "restaurant": "Restaurant",
       "livreur": "Livreur"
     }
   }

@@ -74,9 +74,6 @@ class CommandeGatlingTest extends Simulation {
                 "creationDate":"SAMPLE_TEXT"
                 , "deliveryDate":"SAMPLE_TEXT"
                 , "status":"SAMPLE_TEXT"
-                , "client":"SAMPLE_TEXT"
-                , "restaurant":"SAMPLE_TEXT"
-                , "livreur":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_commande_url"))).exitHereIfFailed

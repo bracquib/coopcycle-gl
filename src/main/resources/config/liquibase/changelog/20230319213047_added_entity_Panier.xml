@@ -14,12 +14,6 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="client" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-            <column name="commande" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
             <column name="client_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -47,8 +41,6 @@
                   tableName="panier"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="client" type="string"/>
-            <column name="commande" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

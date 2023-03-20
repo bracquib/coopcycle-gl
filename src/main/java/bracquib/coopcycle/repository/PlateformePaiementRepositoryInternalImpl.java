@@ -104,6 +104,21 @@ class PlateformePaiementRepositoryInternalImpl
         return createQuery(null, whereClause).one();
     }
 
+    @Override
+    public Mono<PlateformePaiement> findOneWithEagerRelationships(Long id) {
+        return findById(id);
+    }
+
+    @Override
+    public Flux<PlateformePaiement> findAllWithEagerRelationships() {
+        return findAll();
+    }
+
+    @Override
+    public Flux<PlateformePaiement> findAllWithEagerRelationships(Pageable page) {
+        return findAllBy(page);
+    }
+
     private PlateformePaiement process(Row row, RowMetadata metadata) {
         PlateformePaiement entity = plateformepaiementMapper.apply(row, "e");
         entity.setCommande(commandeMapper.apply(row, "commande"));

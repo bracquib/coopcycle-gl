@@ -4,18 +4,7 @@
   "dto": "mapstruct",
   "embedded": false,
   "entityTableName": "panier",
-  "fields": [
-    {
-      "fieldName": "client",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "commande",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    }
-  ],
+  "fields": [],
   "fluentMethods": true,
   "jpaMetamodelFiltering": false,
   "name": "Panier",
@@ -23,11 +12,13 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityField": "name",
       "otherEntityName": "client",
       "relationshipName": "client",
       "relationshipType": "many-to-one"
     },
     {
+      "otherEntityField": "creationDate",
       "otherEntityName": "commande",
       "relationshipName": "commande",
       "relationshipType": "many-to-one"

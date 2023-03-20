@@ -16,6 +16,15 @@ import reactor.core.publisher.Mono;
 @Repository
 public interface PlateformePaiementRepository
     extends ReactiveCrudRepository<PlateformePaiement, Long>, PlateformePaiementRepositoryInternal {
+    @Override
+    Mono<PlateformePaiement> findOneWithEagerRelationships(Long id);
+
+    @Override
+    Flux<PlateformePaiement> findAllWithEagerRelationships();
+
+    @Override
+    Flux<PlateformePaiement> findAllWithEagerRelationships(Pageable page);
+
     @Query("SELECT * FROM plateforme_paiement entity WHERE entity.commande_id = :id")
     Flux<PlateformePaiement> findByCommande(Long id);
 
@@ -46,4 +55,11 @@ interface PlateformePaiementRepositoryInternal {
     // this is not supported at the moment because of https://github.com/jhipster/generator-jhipster/issues/18269
     // Flux<PlateformePaiement> findAllBy(Pageable pageable, Criteria criteria);
 
+    Mono<PlateformePaiement> findOneWithEagerRelationships(Long id);
+
+    Flux<PlateformePaiement> findAllWithEagerRelationships();
+
+    Flux<PlateformePaiement> findAllWithEagerRelationships(Pageable page);
+
+    Mono<Void> deleteById(Long id);
 }

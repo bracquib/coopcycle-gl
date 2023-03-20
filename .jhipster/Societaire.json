@@ -6,16 +6,16 @@
   "entityTableName": "societaire",
   "fields": [
     {
-      "fieldName": "client",
+      "fieldName": "nameclient",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "restaurant",
+      "fieldName": "namerestaurant",
       "fieldType": "String"
     },
     {
-      "fieldName": "livreur",
+      "fieldName": "namelivreur",
       "fieldType": "String"
     }
   ],
@@ -26,16 +26,19 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityField": "name",
       "otherEntityName": "client",
       "relationshipName": "client",
       "relationshipType": "many-to-one"
     },
     {
+      "otherEntityField": "name",
       "otherEntityName": "restaurant",
       "relationshipName": "restaurant",
       "relationshipType": "many-to-one"
     },
     {
+      "otherEntityField": "name",
       "otherEntityName": "livreur",
       "relationshipName": "livreur",
       "relationshipType": "many-to-one"

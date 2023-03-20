@@ -18,9 +18,9 @@
         "title": "Societaire"
       },
       "id": "ID",
-      "client": "Client",
-      "restaurant": "Restaurant",
-      "livreur": "Livreur",
+      "nameclient": "Nameclient",
+      "namerestaurant": "Namerestaurant",
+      "namelivreur": "Namelivreur",
       "client": "Client",
       "restaurant": "Restaurant",
       "livreur": "Livreur"

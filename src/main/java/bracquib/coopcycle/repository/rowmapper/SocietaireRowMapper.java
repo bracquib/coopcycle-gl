@@ -25,9 +25,9 @@ public class SocietaireRowMapper implements BiFunction<Row, String, Societaire> 
     public Societaire apply(Row row, String prefix) {
         Societaire entity = new Societaire();
         entity.setId(converter.fromRow(row, prefix + "_id", Long.class));
-        entity.setClient(converter.fromRow(row, prefix + "_client", String.class));
-        entity.setRestaurant(converter.fromRow(row, prefix + "_restaurant", String.class));
-        entity.setLivreur(converter.fromRow(row, prefix + "_livreur", String.class));
+        entity.setNameclient(converter.fromRow(row, prefix + "_nameclient", String.class));
+        entity.setNamerestaurant(converter.fromRow(row, prefix + "_namerestaurant", String.class));
+        entity.setNamelivreur(converter.fromRow(row, prefix + "_namelivreur", String.class));
         entity.setClientId(converter.fromRow(row, prefix + "_client_id", Long.class));
         entity.setRestaurantId(converter.fromRow(row, prefix + "_restaurant_id", Long.class));
         entity.setLivreurId(converter.fromRow(row, prefix + "_livreur_id", Long.class));

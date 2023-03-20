@@ -23,15 +23,6 @@
             <column name="status" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="client" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-            <column name="restaurant" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-            <column name="livreur" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
             <column name="client_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -65,9 +56,6 @@
             <column name="creation_date" type="string"/>
             <column name="delivery_date" type="string"/>
             <column name="status" type="string"/>
-            <column name="client" type="string"/>
-            <column name="restaurant" type="string"/>
-            <column name="livreur" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

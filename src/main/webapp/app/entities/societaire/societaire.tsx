@@ -52,13 +52,13 @@ export const Societaire = () => {
                   <Translate contentKey="coopcycleApp.societaire.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="coopcycleApp.societaire.client">Client</Translate>
+                  <Translate contentKey="coopcycleApp.societaire.nameclient">Nameclient</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="coopcycleApp.societaire.restaurant">Restaurant</Translate>
+                  <Translate contentKey="coopcycleApp.societaire.namerestaurant">Namerestaurant</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="coopcycleApp.societaire.livreur">Livreur</Translate>
+                  <Translate contentKey="coopcycleApp.societaire.namelivreur">Namelivreur</Translate>
                 </th>
                 <th>
                   <Translate contentKey="coopcycleApp.societaire.client">Client</Translate>
@@ -80,14 +80,14 @@ export const Societaire = () => {
                       {societaire.id}
                     </Button>
                   </td>
-                  <td>{societaire.client}</td>
-                  <td>{societaire.restaurant}</td>
-                  <td>{societaire.livreur}</td>
-                  <td>{societaire.client ? <Link to={`/client/${societaire.client.id}`}>{societaire.client.id}</Link> : ''}</td>
+                  <td>{societaire.nameclient}</td>
+                  <td>{societaire.namerestaurant}</td>
+                  <td>{societaire.namelivreur}</td>
+                  <td>{societaire.client ? <Link to={`/client/${societaire.client.id}`}>{societaire.client.name}</Link> : ''}</td>
                   <td>
-                    {societaire.restaurant ? <Link to={`/restaurant/${societaire.restaurant.id}`}>{societaire.restaurant.id}</Link> : ''}
+                    {societaire.restaurant ? <Link to={`/restaurant/${societaire.restaurant.id}`}>{societaire.restaurant.name}</Link> : ''}
                   </td>
-                  <td>{societaire.livreur ? <Link to={`/livreur/${societaire.livreur.id}`}>{societaire.livreur.id}</Link> : ''}</td>
+                  <td>{societaire.livreur ? <Link to={`/livreur/${societaire.livreur.id}`}>{societaire.livreur.name}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/societaire/${societaire.id}`} color="info" size="sm" data-cy="entityDetailsButton">

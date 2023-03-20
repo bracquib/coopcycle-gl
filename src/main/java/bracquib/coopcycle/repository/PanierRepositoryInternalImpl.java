@@ -110,6 +110,21 @@ class PanierRepositoryInternalImpl extends SimpleR2dbcRepository<Panier, Long> i
         return createQuery(null, whereClause).one();
     }
 
+    @Override
+    public Mono<Panier> findOneWithEagerRelationships(Long id) {
+        return findById(id);
+    }
+
+    @Override
+    public Flux<Panier> findAllWithEagerRelationships() {
+        return findAll();
+    }
+
+    @Override
+    public Flux<Panier> findAllWithEagerRelationships(Pageable page) {
+        return findAllBy(page);
+    }
+
     private Panier process(Row row, RowMetadata metadata) {
         Panier entity = panierMapper.apply(row, "e");
         entity.setClient(clientMapper.apply(row, "client"));

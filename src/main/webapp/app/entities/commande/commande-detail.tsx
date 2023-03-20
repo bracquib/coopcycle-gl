@@ -51,35 +51,17 @@ export const CommandeDetail = () => {
           </dt>
           <dd>{commandeEntity.status}</dd>
           <dt>
-            <span id="client">
-              <Translate contentKey="coopcycleApp.commande.client">Client</Translate>
-            </span>
-          </dt>
-          <dd>{commandeEntity.client}</dd>
-          <dt>
-            <span id="restaurant">
-              <Translate contentKey="coopcycleApp.commande.restaurant">Restaurant</Translate>
-            </span>
-          </dt>
-          <dd>{commandeEntity.restaurant}</dd>
-          <dt>
-            <span id="livreur">
-              <Translate contentKey="coopcycleApp.commande.livreur">Livreur</Translate>
-            </span>
-          </dt>
-          <dd>{commandeEntity.livreur}</dd>
-          <dt>
             <Translate contentKey="coopcycleApp.commande.client">Client</Translate>
           </dt>
-          <dd>{commandeEntity.client ? commandeEntity.client.id : ''}</dd>
+          <dd>{commandeEntity.client ? commandeEntity.client.name : ''}</dd>
           <dt>
             <Translate contentKey="coopcycleApp.commande.restaurant">Restaurant</Translate>
           </dt>
-          <dd>{commandeEntity.restaurant ? commandeEntity.restaurant.id : ''}</dd>
+          <dd>{commandeEntity.restaurant ? commandeEntity.restaurant.name : ''}</dd>
           <dt>
             <Translate contentKey="coopcycleApp.commande.livreur">Livreur</Translate>
           </dt>
-          <dd>{commandeEntity.livreur ? commandeEntity.livreur.id : ''}</dd>
+          <dd>{commandeEntity.livreur ? commandeEntity.livreur.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/commande" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

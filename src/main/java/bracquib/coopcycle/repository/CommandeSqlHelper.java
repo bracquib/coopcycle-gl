@@ -14,9 +14,6 @@ public class CommandeSqlHelper {
         columns.add(Column.aliased("creation_date", table, columnPrefix + "_creation_date"));
         columns.add(Column.aliased("delivery_date", table, columnPrefix + "_delivery_date"));
         columns.add(Column.aliased("status", table, columnPrefix + "_status"));
-        columns.add(Column.aliased("client", table, columnPrefix + "_client"));
-        columns.add(Column.aliased("restaurant", table, columnPrefix + "_restaurant"));
-        columns.add(Column.aliased("livreur", table, columnPrefix + "_livreur"));
 
         columns.add(Column.aliased("client_id", table, columnPrefix + "_client_id"));
         columns.add(Column.aliased("restaurant_id", table, columnPrefix + "_restaurant_id"));

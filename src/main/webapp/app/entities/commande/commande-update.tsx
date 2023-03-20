@@ -134,33 +134,6 @@ export const CommandeUpdate = () => {
                 }}
               />
               <ValidatedField
-                label={translate('coopcycleApp.commande.client')}
-                id="commande-client"
-                name="client"
-                data-cy="client"
-                type="text"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                }}
-              />
-              <ValidatedField
-                label={translate('coopcycleApp.commande.restaurant')}
-                id="commande-restaurant"
-                name="restaurant"
-                data-cy="restaurant"
-                type="text"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                }}
-              />
-              <ValidatedField
-                label={translate('coopcycleApp.commande.livreur')}
-                id="commande-livreur"
-                name="livreur"
-                data-cy="livreur"
-                type="text"
-              />
-              <ValidatedField
                 id="commande-client"
                 name="client"
                 data-cy="client"
@@ -171,7 +144,7 @@ export const CommandeUpdate = () => {
                 {clients
                   ? clients.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.name}
                       </option>
                     ))
                   : null}
@@ -187,7 +160,7 @@ export const CommandeUpdate = () => {
                 {restaurants
                   ? restaurants.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.name}
                       </option>
                     ))
                   : null}
@@ -203,7 +176,7 @@ export const CommandeUpdate = () => {
                 {livreurs
                   ? livreurs.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.name}
                       </option>
                     ))
                   : null}

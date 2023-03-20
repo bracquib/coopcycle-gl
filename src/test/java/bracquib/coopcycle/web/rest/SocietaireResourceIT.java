@@ -3,11 +3,13 @@ package bracquib.coopcycle.web.rest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.*;
 
 import bracquib.coopcycle.IntegrationTest;
 import bracquib.coopcycle.domain.Societaire;
 import bracquib.coopcycle.repository.EntityManager;
 import bracquib.coopcycle.repository.SocietaireRepository;
+import bracquib.coopcycle.service.SocietaireService;
 import bracquib.coopcycle.service.dto.SocietaireDTO;
 import bracquib.coopcycle.service.mapper.SocietaireMapper;
 import java.time.Duration;
@@ -17,28 +19,37 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  * Integration tests for the {@link SocietaireResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureWebTestClient(timeout = IntegrationTest.DEFAULT_ENTITY_TIMEOUT)
 @WithMockUser
 class SocietaireResourceIT {
 
-    private static final String DEFAULT_CLIENT = "AAAAAAAAAA";
-    private static final String UPDATED_CLIENT = "BBBBBBBBBB";
+    private static final String DEFAULT_NAMECLIENT = "AAAAAAAAAA";
+    private static final String UPDATED_NAMECLIENT = "BBBBBBBBBB";
 
-    private static final String DEFAULT_RESTAURANT = "AAAAAAAAAA";
-    private static final String UPDATED_RESTAURANT = "BBBBBBBBBB";
+    private static final String DEFAULT_NAMERESTAURANT = "AAAAAAAAAA";
+    private static final String UPDATED_NAMERESTAURANT = "BBBBBBBBBB";
 
-    private static final String DEFAULT_LIVREUR = "AAAAAAAAAA";
-    private static final String UPDATED_LIVREUR = "BBBBBBBBBB";
+    private static final String DEFAULT_NAMELIVREUR = "AAAAAAAAAA";
+    private static final String UPDATED_NAMELIVREUR = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/societaires";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -49,8 +60,14 @@ class SocietaireResourceIT {
     @Autowired
     private SocietaireRepository societaireRepository;
 
+    @Mock
+    private SocietaireRepository societaireRepositoryMock;
+
     @Autowired
     private SocietaireMapper societaireMapper;
+
+    @Mock
+    private SocietaireService societaireServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -67,7 +84,10 @@ class SocietaireResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Societaire createEntity(EntityManager em) {
-        Societaire societaire = new Societaire().client(DEFAULT_CLIENT).restaurant(DEFAULT_RESTAURANT).livreur(DEFAULT_LIVREUR);
+        Societaire societaire = new Societaire()
+            .nameclient(DEFAULT_NAMECLIENT)
+            .namerestaurant(DEFAULT_NAMERESTAURANT)
+            .namelivreur(DEFAULT_NAMELIVREUR);
         return societaire;
     }
 
@@ -78,7 +98,10 @@ class SocietaireResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Societaire createUpdatedEntity(EntityManager em) {
-        Societaire societaire = new Societaire().client(UPDATED_CLIENT).restaurant(UPDATED_RESTAURANT).livreur(UPDATED_LIVREUR);
+        Societaire societaire = new Societaire()
+            .nameclient(UPDATED_NAMECLIENT)
+            .namerestaurant(UPDATED_NAMERESTAURANT)
+            .namelivreur(UPDATED_NAMELIVREUR);
         return societaire;
     }
 
@@ -119,9 +142,9 @@ class SocietaireResourceIT {
         List<Societaire> societaireList = societaireRepository.findAll().collectList().block();
         assertThat(societaireList).hasSize(databaseSizeBeforeCreate + 1);
         Societaire testSocietaire = societaireList.get(societaireList.size() - 1);
-        assertThat(testSocietaire.getClient()).isEqualTo(DEFAULT_CLIENT);
-        assertThat(testSocietaire.getRestaurant()).isEqualTo(DEFAULT_RESTAURANT);
-        assertThat(testSocietaire.getLivreur()).isEqualTo(DEFAULT_LIVREUR);
+        assertThat(testSocietaire.getNameclient()).isEqualTo(DEFAULT_NAMECLIENT);
+        assertThat(testSocietaire.getNamerestaurant()).isEqualTo(DEFAULT_NAMERESTAURANT);
+        assertThat(testSocietaire.getNamelivreur()).isEqualTo(DEFAULT_NAMELIVREUR);
     }
 
     @Test
@@ -148,10 +171,10 @@ class SocietaireResourceIT {
     }
 
     @Test
-    void checkClientIsRequired() throws Exception {
+    void checkNameclientIsRequired() throws Exception {
         int databaseSizeBeforeTest = societaireRepository.findAll().collectList().block().size();
         // set the field null
-        societaire.setClient(null);
+        societaire.setNameclient(null);
 
         // Create the Societaire, which fails.
         SocietaireDTO societaireDTO = societaireMapper.toDto(societaire);
@@ -193,9 +216,9 @@ class SocietaireResourceIT {
         assertThat(societaireList).isNotNull();
         assertThat(societaireList).hasSize(1);
         Societaire testSocietaire = societaireList.get(0);
-        assertThat(testSocietaire.getClient()).isEqualTo(DEFAULT_CLIENT);
-        assertThat(testSocietaire.getRestaurant()).isEqualTo(DEFAULT_RESTAURANT);
-        assertThat(testSocietaire.getLivreur()).isEqualTo(DEFAULT_LIVREUR);
+        assertThat(testSocietaire.getNameclient()).isEqualTo(DEFAULT_NAMECLIENT);
+        assertThat(testSocietaire.getNamerestaurant()).isEqualTo(DEFAULT_NAMERESTAURANT);
+        assertThat(testSocietaire.getNamelivreur()).isEqualTo(DEFAULT_NAMELIVREUR);
     }
 
     @Test
@@ -216,12 +239,29 @@ class SocietaireResourceIT {
             .expectBody()
             .jsonPath("$.[*].id")
             .value(hasItem(societaire.getId().intValue()))
-            .jsonPath("$.[*].client")
-            .value(hasItem(DEFAULT_CLIENT))
-            .jsonPath("$.[*].restaurant")
-            .value(hasItem(DEFAULT_RESTAURANT))
-            .jsonPath("$.[*].livreur")
-            .value(hasItem(DEFAULT_LIVREUR));
+            .jsonPath("$.[*].nameclient")
+            .value(hasItem(DEFAULT_NAMECLIENT))
+            .jsonPath("$.[*].namerestaurant")
+            .value(hasItem(DEFAULT_NAMERESTAURANT))
+            .jsonPath("$.[*].namelivreur")
+            .value(hasItem(DEFAULT_NAMELIVREUR));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllSocietairesWithEagerRelationshipsIsEnabled() {
+        when(societaireServiceMock.findAllWithEagerRelationships(any())).thenReturn(Flux.empty());
+
+        webTestClient.get().uri(ENTITY_API_URL + "?eagerload=true").exchange().expectStatus().isOk();
+
+        verify(societaireServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllSocietairesWithEagerRelationshipsIsNotEnabled() {
+        when(societaireServiceMock.findAllWithEagerRelationships(any())).thenReturn(Flux.empty());
+
+        webTestClient.get().uri(ENTITY_API_URL + "?eagerload=false").exchange().expectStatus().isOk();
+        verify(societaireRepositoryMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test
@@ -242,12 +282,12 @@ class SocietaireResourceIT {
             .expectBody()
             .jsonPath("$.id")
             .value(is(societaire.getId().intValue()))
-            .jsonPath("$.client")
-            .value(is(DEFAULT_CLIENT))
-            .jsonPath("$.restaurant")
-            .value(is(DEFAULT_RESTAURANT))
-            .jsonPath("$.livreur")
-            .value(is(DEFAULT_LIVREUR));
+            .jsonPath("$.nameclient")
+            .value(is(DEFAULT_NAMECLIENT))
+            .jsonPath("$.namerestaurant")
+            .value(is(DEFAULT_NAMERESTAURANT))
+            .jsonPath("$.namelivreur")
+            .value(is(DEFAULT_NAMELIVREUR));
     }
 
     @Test
@@ -271,7 +311,7 @@ class SocietaireResourceIT {
 
         // Update the societaire
         Societaire updatedSocietaire = societaireRepository.findById(societaire.getId()).block();
-        updatedSocietaire.client(UPDATED_CLIENT).restaurant(UPDATED_RESTAURANT).livreur(UPDATED_LIVREUR);
+        updatedSocietaire.nameclient(UPDATED_NAMECLIENT).namerestaurant(UPDATED_NAMERESTAURANT).namelivreur(UPDATED_NAMELIVREUR);
         SocietaireDTO societaireDTO = societaireMapper.toDto(updatedSocietaire);
 
         webTestClient
@@ -287,9 +327,9 @@ class SocietaireResourceIT {
         List<Societaire> societaireList = societaireRepository.findAll().collectList().block();
         assertThat(societaireList).hasSize(databaseSizeBeforeUpdate);
         Societaire testSocietaire = societaireList.get(societaireList.size() - 1);
-        assertThat(testSocietaire.getClient()).isEqualTo(UPDATED_CLIENT);
-        assertThat(testSocietaire.getRestaurant()).isEqualTo(UPDATED_RESTAURANT);
-        assertThat(testSocietaire.getLivreur()).isEqualTo(UPDATED_LIVREUR);
+        assertThat(testSocietaire.getNameclient()).isEqualTo(UPDATED_NAMECLIENT);
+        assertThat(testSocietaire.getNamerestaurant()).isEqualTo(UPDATED_NAMERESTAURANT);
+        assertThat(testSocietaire.getNamelivreur()).isEqualTo(UPDATED_NAMELIVREUR);
     }
 
     @Test
@@ -372,7 +412,7 @@ class SocietaireResourceIT {
         Societaire partialUpdatedSocietaire = new Societaire();
         partialUpdatedSocietaire.setId(societaire.getId());
 
-        partialUpdatedSocietaire.client(UPDATED_CLIENT).restaurant(UPDATED_RESTAURANT).livreur(UPDATED_LIVREUR);
+        partialUpdatedSocietaire.nameclient(UPDATED_NAMECLIENT).namerestaurant(UPDATED_NAMERESTAURANT).namelivreur(UPDATED_NAMELIVREUR);
 
         webTestClient
             .patch()
@@ -387,9 +427,9 @@ class SocietaireResourceIT {
         List<Societaire> societaireList = societaireRepository.findAll().collectList().block();
         assertThat(societaireList).hasSize(databaseSizeBeforeUpdate);
         Societaire testSocietaire = societaireList.get(societaireList.size() - 1);
-        assertThat(testSocietaire.getClient()).isEqualTo(UPDATED_CLIENT);
-        assertThat(testSocietaire.getRestaurant()).isEqualTo(UPDATED_RESTAURANT);
-        assertThat(testSocietaire.getLivreur()).isEqualTo(UPDATED_LIVREUR);
+        assertThat(testSocietaire.getNameclient()).isEqualTo(UPDATED_NAMECLIENT);
+        assertThat(testSocietaire.getNamerestaurant()).isEqualTo(UPDATED_NAMERESTAURANT);
+        assertThat(testSocietaire.getNamelivreur()).isEqualTo(UPDATED_NAMELIVREUR);
     }
 
     @Test
@@ -403,7 +443,7 @@ class SocietaireResourceIT {
         Societaire partialUpdatedSocietaire = new Societaire();
         partialUpdatedSocietaire.setId(societaire.getId());
 
-        partialUpdatedSocietaire.client(UPDATED_CLIENT).restaurant(UPDATED_RESTAURANT).livreur(UPDATED_LIVREUR);
+        partialUpdatedSocietaire.nameclient(UPDATED_NAMECLIENT).namerestaurant(UPDATED_NAMERESTAURANT).namelivreur(UPDATED_NAMELIVREUR);
 
         webTestClient
             .patch()
@@ -418,9 +458,9 @@ class SocietaireResourceIT {
         List<Societaire> societaireList = societaireRepository.findAll().collectList().block();
         assertThat(societaireList).hasSize(databaseSizeBeforeUpdate);
         Societaire testSocietaire = societaireList.get(societaireList.size() - 1);
-        assertThat(testSocietaire.getClient()).isEqualTo(UPDATED_CLIENT);
-        assertThat(testSocietaire.getRestaurant()).isEqualTo(UPDATED_RESTAURANT);
-        assertThat(testSocietaire.getLivreur()).isEqualTo(UPDATED_LIVREUR);
+        assertThat(testSocietaire.getNameclient()).isEqualTo(UPDATED_NAMECLIENT);
+        assertThat(testSocietaire.getNamerestaurant()).isEqualTo(UPDATED_NAMERESTAURANT);
+        assertThat(testSocietaire.getNamelivreur()).isEqualTo(UPDATED_NAMELIVREUR);
     }
 
     @Test

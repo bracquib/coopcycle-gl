@@ -9,8 +9,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -55,7 +53,7 @@ public class PanierResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/paniers")
-    public Mono<ResponseEntity<PanierDTO>> createPanier(@Valid @RequestBody PanierDTO panierDTO) throws URISyntaxException {
+    public Mono<ResponseEntity<PanierDTO>> createPanier(@RequestBody PanierDTO panierDTO) throws URISyntaxException {
         log.debug("REST request to save Panier : {}", panierDTO);
         if (panierDTO.getId() != null) {
             throw new BadRequestAlertException("A new panier cannot already have an ID", ENTITY_NAME, "idexists");
@@ -87,7 +85,7 @@ public class PanierResource {
     @PutMapping("/paniers/{id}")
     public Mono<ResponseEntity<PanierDTO>> updatePanier(
         @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody PanierDTO panierDTO
+        @RequestBody PanierDTO panierDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Panier : {}, {}", id, panierDTO);
         if (panierDTO.getId() == null) {
@@ -130,7 +128,7 @@ public class PanierResource {
     @PatchMapping(value = "/paniers/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public Mono<ResponseEntity<PanierDTO>> partialUpdatePanier(
         @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody PanierDTO panierDTO
+        @RequestBody PanierDTO panierDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Panier partially : {}, {}", id, panierDTO);
         if (panierDTO.getId() == null) {
@@ -163,10 +161,11 @@ public class PanierResource {
     /**
      * {@code GET  /paniers} : get all the paniers.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of paniers in body.
      */
     @GetMapping("/paniers")
-    public Mono<List<PanierDTO>> getAllPaniers() {
+    public Mono<List<PanierDTO>> getAllPaniers(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Paniers");
         return panierService.findAll().collectList();
     }

@@ -15,23 +15,26 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface SocietaireMapper extends EntityMapper<SocietaireDTO, Societaire> {
-    @Mapping(target = "client", source = "client", qualifiedByName = "clientId")
-    @Mapping(target = "restaurant", source = "restaurant", qualifiedByName = "restaurantId")
-    @Mapping(target = "livreur", source = "livreur", qualifiedByName = "livreurId")
+    @Mapping(target = "client", source = "client", qualifiedByName = "clientName")
+    @Mapping(target = "restaurant", source = "restaurant", qualifiedByName = "restaurantName")
+    @Mapping(target = "livreur", source = "livreur", qualifiedByName = "livreurName")
     SocietaireDTO toDto(Societaire s);
 
-    @Named("clientId")
+    @Named("clientName")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    ClientDTO toDtoClientId(Client client);
+    @Mapping(target = "name", source = "name")
+    ClientDTO toDtoClientName(Client client);
 
-    @Named("restaurantId")
+    @Named("restaurantName")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    RestaurantDTO toDtoRestaurantId(Restaurant restaurant);
+    @Mapping(target = "name", source = "name")
+    RestaurantDTO toDtoRestaurantName(Restaurant restaurant);
 
-    @Named("livreurId")
+    @Named("livreurName")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    LivreurDTO toDtoLivreurId(Livreur livreur);
+    @Mapping(target = "name", source = "name")
+    LivreurDTO toDtoLivreurName(Livreur livreur);
 }

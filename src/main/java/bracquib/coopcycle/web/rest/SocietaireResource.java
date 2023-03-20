@@ -163,10 +163,11 @@ public class SocietaireResource {
     /**
      * {@code GET  /societaires} : get all the societaires.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of societaires in body.
      */
     @GetMapping("/societaires")
-    public Mono<List<SocietaireDTO>> getAllSocietaires() {
+    public Mono<List<SocietaireDTO>> getAllSocietaires(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Societaires");
         return societaireService.findAll().collectList();
     }

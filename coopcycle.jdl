@@ -25,9 +25,9 @@ entity Livreur {
 
 // Sociétaire
 entity Societaire {
-    client String required,
-    restaurant String,
-    livreur String
+    nameclient String required,
+    namerestaurant String,
+    namelivreur String
 }
 
 // Commande
@@ -35,17 +35,13 @@ entity Commande {
     creationDate String required,
     deliveryDate String,
     status String required,
-    client String required,
-    restaurant String required,
-    livreur String
 }
 
 // Panier
 entity Panier {
-    client String required,
-    commande String required
 }
 
+// PlateformePaiement
 entity PlateformePaiement {
     amount String required,
     paymentType TypePaiement required,
@@ -67,14 +63,14 @@ enum TypePaiement {
 
 // Relation ManyToOne
 relationship ManyToOne {
-    Commande{client} to Client,
-    Commande{restaurant} to Restaurant,
-    Commande{livreur} to Livreur,
-    Panier{client} to Client,
-    Panier{commande} to Commande,
-    Societaire{client} to Client,
-    Societaire{restaurant} to Restaurant,
-    Societaire{livreur} to Livreur,
-    PlateformePaiement{commande} to Commande,
+    Commande{client(name)} to Client,
+    Commande{restaurant(name)} to Restaurant,
+    Commande{livreur(name)} to Livreur,
+    Panier{client(name)} to Client,
+    Panier{commande(creationDate)} to Commande,
+    Societaire{client(name)} to Client,
+    Societaire{restaurant(name)} to Restaurant,
+    Societaire{livreur(name)} to Livreur,
+    PlateformePaiement{commande(creationDate)} to Commande,
 }
 dto * with mapstruct

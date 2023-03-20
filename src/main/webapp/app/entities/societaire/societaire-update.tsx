@@ -107,27 +107,27 @@ export const SocietaireUpdate = () => {
                 />
               ) : null}
               <ValidatedField
-                label={translate('coopcycleApp.societaire.client')}
-                id="societaire-client"
-                name="client"
-                data-cy="client"
+                label={translate('coopcycleApp.societaire.nameclient')}
+                id="societaire-nameclient"
+                name="nameclient"
+                data-cy="nameclient"
                 type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
                 }}
               />
               <ValidatedField
-                label={translate('coopcycleApp.societaire.restaurant')}
-                id="societaire-restaurant"
-                name="restaurant"
-                data-cy="restaurant"
+                label={translate('coopcycleApp.societaire.namerestaurant')}
+                id="societaire-namerestaurant"
+                name="namerestaurant"
+                data-cy="namerestaurant"
                 type="text"
               />
               <ValidatedField
-                label={translate('coopcycleApp.societaire.livreur')}
-                id="societaire-livreur"
-                name="livreur"
-                data-cy="livreur"
+                label={translate('coopcycleApp.societaire.namelivreur')}
+                id="societaire-namelivreur"
+                name="namelivreur"
+                data-cy="namelivreur"
                 type="text"
               />
               <ValidatedField
@@ -141,7 +141,7 @@ export const SocietaireUpdate = () => {
                 {clients
                   ? clients.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.name}
                       </option>
                     ))
                   : null}
@@ -157,7 +157,7 @@ export const SocietaireUpdate = () => {
                 {restaurants
                   ? restaurants.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.name}
                       </option>
                     ))
                   : null}
@@ -173,7 +173,7 @@ export const SocietaireUpdate = () => {
                 {livreurs
                   ? livreurs.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.name}
                       </option>
                     ))
                   : null}

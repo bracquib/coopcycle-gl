@@ -119,6 +119,21 @@ class SocietaireRepositoryInternalImpl extends SimpleR2dbcRepository<Societaire,
         return createQuery(null, whereClause).one();
     }
 
+    @Override
+    public Mono<Societaire> findOneWithEagerRelationships(Long id) {
+        return findById(id);
+    }
+
+    @Override
+    public Flux<Societaire> findAllWithEagerRelationships() {
+        return findAll();
+    }
+
+    @Override
+    public Flux<Societaire> findAllWithEagerRelationships(Pageable page) {
+        return findAllBy(page);
+    }
+
     private Societaire process(Row row, RowMetadata metadata) {
         Societaire entity = societaireMapper.apply(row, "e");
         entity.setClient(clientMapper.apply(row, "client"));

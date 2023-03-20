@@ -2,7 +2,6 @@ package bracquib.coopcycle.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import javax.validation.constraints.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
@@ -20,14 +19,6 @@ public class Panier implements Serializable {
     @Id
     @Column("id")
     private Long id;
-
-    @NotNull(message = "must not be null")
-    @Column("client")
-    private String client;
-
-    @NotNull(message = "must not be null")
-    @Column("commande")
-    private String commande;
 
     @Transient
     private Client client;
@@ -55,32 +46,6 @@ public class Panier implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getClient() {
-        return this.client;
-    }
-
-    public Panier client(String client) {
-        this.setClient(client);
-        return this;
-    }
-
-    public void setClient(String client) {
-        this.client = client;
-    }
-
-    public String getCommande() {
-        return this.commande;
-    }
-
-    public Panier commande(String commande) {
-        this.setCommande(commande);
-        return this;
-    }
-
-    public void setCommande(String commande) {
-        this.commande = commande;
     }
 
     public Client getClient() {
@@ -151,8 +116,6 @@ public class Panier implements Serializable {
     public String toString() {
         return "Panier{" +
             "id=" + getId() +
-            ", client='" + getClient() + "'" +
-            ", commande='" + getCommande() + "'" +
             "}";
     }
 }

@@ -7,9 +7,6 @@ export interface ICommande {
   creationDate?: string;
   deliveryDate?: string | null;
   status?: string;
-  client?: string;
-  restaurant?: string;
-  livreur?: string | null;
   client?: IClient | null;
   restaurant?: IRestaurant | null;
   livreur?: ILivreur | null;

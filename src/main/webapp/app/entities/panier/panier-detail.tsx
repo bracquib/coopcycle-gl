@@ -33,25 +33,13 @@ export const PanierDetail = () => {
           </dt>
           <dd>{panierEntity.id}</dd>
           <dt>
-            <span id="client">
-              <Translate contentKey="coopcycleApp.panier.client">Client</Translate>
-            </span>
-          </dt>
-          <dd>{panierEntity.client}</dd>
-          <dt>
-            <span id="commande">
-              <Translate contentKey="coopcycleApp.panier.commande">Commande</Translate>
-            </span>
-          </dt>
-          <dd>{panierEntity.commande}</dd>
-          <dt>
             <Translate contentKey="coopcycleApp.panier.client">Client</Translate>
           </dt>
-          <dd>{panierEntity.client ? panierEntity.client.id : ''}</dd>
+          <dd>{panierEntity.client ? panierEntity.client.name : ''}</dd>
           <dt>
             <Translate contentKey="coopcycleApp.panier.commande">Commande</Translate>
           </dt>
-          <dd>{panierEntity.commande ? panierEntity.commande.id : ''}</dd>
+          <dd>{panierEntity.commande ? panierEntity.commande.creationDate : ''}</dd>
         </dl>
         <Button tag={Link} to="/panier" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

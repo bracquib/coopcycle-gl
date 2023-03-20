@@ -101,26 +101,6 @@ export const PanierUpdate = () => {
                 />
               ) : null}
               <ValidatedField
-                label={translate('coopcycleApp.panier.client')}
-                id="panier-client"
-                name="client"
-                data-cy="client"
-                type="text"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                }}
-              />
-              <ValidatedField
-                label={translate('coopcycleApp.panier.commande')}
-                id="panier-commande"
-                name="commande"
-                data-cy="commande"
-                type="text"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                }}
-              />
-              <ValidatedField
                 id="panier-client"
                 name="client"
                 data-cy="client"
@@ -131,7 +111,7 @@ export const PanierUpdate = () => {
                 {clients
                   ? clients.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.name}
                       </option>
                     ))
                   : null}
@@ -147,7 +127,7 @@ export const PanierUpdate = () => {
                 {commandes
                   ? commandes.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.creationDate}
                       </option>
                     ))
                   : null}

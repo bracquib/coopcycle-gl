@@ -13,11 +13,11 @@ public class SocietaireDTO implements Serializable {
     private Long id;
 
     @NotNull(message = "must not be null")
-    private String client;
+    private String nameclient;
 
-    private String restaurant;
+    private String namerestaurant;
 
-    private String livreur;
+    private String namelivreur;
 
     private ClientDTO client;
 
@@ -33,28 +33,28 @@ public class SocietaireDTO implements Serializable {
         this.id = id;
     }
 
-    public String getClient() {
-        return client;
+    public String getNameclient() {
+        return nameclient;
     }
 
-    public void setClient(String client) {
-        this.client = client;
+    public void setNameclient(String nameclient) {
+        this.nameclient = nameclient;
     }
 
-    public String getRestaurant() {
-        return restaurant;
+    public String getNamerestaurant() {
+        return namerestaurant;
     }
 
-    public void setRestaurant(String restaurant) {
-        this.restaurant = restaurant;
+    public void setNamerestaurant(String namerestaurant) {
+        this.namerestaurant = namerestaurant;
     }
 
-    public String getLivreur() {
-        return livreur;
+    public String getNamelivreur() {
+        return namelivreur;
     }
 
-    public void setLivreur(String livreur) {
-        this.livreur = livreur;
+    public void setNamelivreur(String namelivreur) {
+        this.namelivreur = namelivreur;
     }
 
     public ClientDTO getClient() {
@@ -107,9 +107,9 @@ public class SocietaireDTO implements Serializable {
     public String toString() {
         return "SocietaireDTO{" +
             "id=" + getId() +
-            ", client='" + getClient() + "'" +
-            ", restaurant='" + getRestaurant() + "'" +
-            ", livreur='" + getLivreur() + "'" +
+            ", nameclient='" + getNameclient() + "'" +
+            ", namerestaurant='" + getNamerestaurant() + "'" +
+            ", namelivreur='" + getNamelivreur() + "'" +
             ", client=" + getClient() +
             ", restaurant=" + getRestaurant() +
             ", livreur=" + getLivreur() +

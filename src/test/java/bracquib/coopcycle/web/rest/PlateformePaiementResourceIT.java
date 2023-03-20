@@ -3,12 +3,14 @@ package bracquib.coopcycle.web.rest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.*;
 
 import bracquib.coopcycle.IntegrationTest;
 import bracquib.coopcycle.domain.PlateformePaiement;
 import bracquib.coopcycle.domain.enumeration.TypePaiement;
 import bracquib.coopcycle.repository.EntityManager;
 import bracquib.coopcycle.repository.PlateformePaiementRepository;
+import bracquib.coopcycle.service.PlateformePaiementService;
 import bracquib.coopcycle.service.dto.PlateformePaiementDTO;
 import bracquib.coopcycle.service.mapper.PlateformePaiementMapper;
 import java.time.Duration;
@@ -18,16 +20,25 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  * Integration tests for the {@link PlateformePaiementResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureWebTestClient(timeout = IntegrationTest.DEFAULT_ENTITY_TIMEOUT)
 @WithMockUser
 class PlateformePaiementResourceIT {
@@ -50,8 +61,14 @@ class PlateformePaiementResourceIT {
     @Autowired
     private PlateformePaiementRepository plateformePaiementRepository;
 
+    @Mock
+    private PlateformePaiementRepository plateformePaiementRepositoryMock;
+
     @Autowired
     private PlateformePaiementMapper plateformePaiementMapper;
+
+    @Mock
+    private PlateformePaiementService plateformePaiementServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -251,6 +268,23 @@ class PlateformePaiementResourceIT {
             .value(hasItem(DEFAULT_PAYMENT_TYPE.toString()))
             .jsonPath("$.[*].description")
             .value(hasItem(DEFAULT_DESCRIPTION));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllPlateformePaiementsWithEagerRelationshipsIsEnabled() {
+        when(plateformePaiementServiceMock.findAllWithEagerRelationships(any())).thenReturn(Flux.empty());
+
+        webTestClient.get().uri(ENTITY_API_URL + "?eagerload=true").exchange().expectStatus().isOk();
+
+        verify(plateformePaiementServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllPlateformePaiementsWithEagerRelationshipsIsNotEnabled() {
+        when(plateformePaiementServiceMock.findAllWithEagerRelationships(any())).thenReturn(Flux.empty());
+
+        webTestClient.get().uri(ENTITY_API_URL + "?eagerload=false").exchange().expectStatus().isOk();
+        verify(plateformePaiementRepositoryMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test

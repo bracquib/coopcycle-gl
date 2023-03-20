@@ -71,8 +71,6 @@ class PanierGatlingTest extends Simulation {
             .post("/api/paniers")
             .headers(headers_http_authenticated)
             .body(StringBody("""{
-                "client":"SAMPLE_TEXT"
-                , "commande":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_panier_url"))).exitHereIfFailed

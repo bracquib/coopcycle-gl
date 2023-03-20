@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
@@ -93,6 +94,15 @@ public class PlateformePaiementService {
     }
 
     /**
+     * Get all the plateformePaiements with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Flux<PlateformePaiementDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return plateformePaiementRepository.findAllWithEagerRelationships(pageable).map(plateformePaiementMapper::toDto);
+    }
+
+    /**
      * Returns the number of plateformePaiements available.
      * @return the number of entities in the database.
      *
@@ -110,7 +120,7 @@ public class PlateformePaiementService {
     @Transactional(readOnly = true)
     public Mono<PlateformePaiementDTO> findOne(Long id) {
         log.debug("Request to get PlateformePaiement : {}", id);
-        return plateformePaiementRepository.findById(id).map(plateformePaiementMapper::toDto);
+        return plateformePaiementRepository.findOneWithEagerRelationships(id).map(plateformePaiementMapper::toDto);
     }
 
     /**

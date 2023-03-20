@@ -21,14 +21,14 @@ public class Societaire implements Serializable {
     private Long id;
 
     @NotNull(message = "must not be null")
-    @Column("client")
-    private String client;
+    @Column("nameclient")
+    private String nameclient;
 
-    @Column("restaurant")
-    private String restaurant;
+    @Column("namerestaurant")
+    private String namerestaurant;
 
-    @Column("livreur")
-    private String livreur;
+    @Column("namelivreur")
+    private String namelivreur;
 
     @Transient
     private Client client;
@@ -63,43 +63,43 @@ public class Societaire implements Serializable {
         this.id = id;
     }
 
-    public String getClient() {
-        return this.client;
+    public String getNameclient() {
+        return this.nameclient;
     }
 
-    public Societaire client(String client) {
-        this.setClient(client);
+    public Societaire nameclient(String nameclient) {
+        this.setNameclient(nameclient);
         return this;
     }
 
-    public void setClient(String client) {
-        this.client = client;
+    public void setNameclient(String nameclient) {
+        this.nameclient = nameclient;
     }
 
-    public String getRestaurant() {
-        return this.restaurant;
+    public String getNamerestaurant() {
+        return this.namerestaurant;
     }
 
-    public Societaire restaurant(String restaurant) {
-        this.setRestaurant(restaurant);
+    public Societaire namerestaurant(String namerestaurant) {
+        this.setNamerestaurant(namerestaurant);
         return this;
     }
 
-    public void setRestaurant(String restaurant) {
-        this.restaurant = restaurant;
+    public void setNamerestaurant(String namerestaurant) {
+        this.namerestaurant = namerestaurant;
     }
 
-    public String getLivreur() {
-        return this.livreur;
+    public String getNamelivreur() {
+        return this.namelivreur;
     }
 
-    public Societaire livreur(String livreur) {
-        this.setLivreur(livreur);
+    public Societaire namelivreur(String namelivreur) {
+        this.setNamelivreur(namelivreur);
         return this;
     }
 
-    public void setLivreur(String livreur) {
-        this.livreur = livreur;
+    public void setNamelivreur(String namelivreur) {
+        this.namelivreur = namelivreur;
     }
 
     public Client getClient() {
@@ -192,9 +192,9 @@ public class Societaire implements Serializable {
     public String toString() {
         return "Societaire{" +
             "id=" + getId() +
-            ", client='" + getClient() + "'" +
-            ", restaurant='" + getRestaurant() + "'" +
-            ", livreur='" + getLivreur() + "'" +
+            ", nameclient='" + getNameclient() + "'" +
+            ", namerestaurant='" + getNamerestaurant() + "'" +
+            ", namelivreur='" + getNamelivreur() + "'" +
             "}";
     }
 }

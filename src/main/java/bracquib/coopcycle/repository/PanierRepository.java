@@ -15,6 +15,15 @@ import reactor.core.publisher.Mono;
 @SuppressWarnings("unused")
 @Repository
 public interface PanierRepository extends ReactiveCrudRepository<Panier, Long>, PanierRepositoryInternal {
+    @Override
+    Mono<Panier> findOneWithEagerRelationships(Long id);
+
+    @Override
+    Flux<Panier> findAllWithEagerRelationships();
+
+    @Override
+    Flux<Panier> findAllWithEagerRelationships(Pageable page);
+
     @Query("SELECT * FROM panier entity WHERE entity.client_id = :id")
     Flux<Panier> findByClient(Long id);
 
@@ -51,4 +60,11 @@ interface PanierRepositoryInternal {
     // this is not supported at the moment because of https://github.com/jhipster/generator-jhipster/issues/18269
     // Flux<Panier> findAllBy(Pageable pageable, Criteria criteria);
 
+    Mono<Panier> findOneWithEagerRelationships(Long id);
+
+    Flux<Panier> findAllWithEagerRelationships();
+
+    Flux<Panier> findAllWithEagerRelationships(Pageable page);
+
+    Mono<Void> deleteById(Long id);
 }

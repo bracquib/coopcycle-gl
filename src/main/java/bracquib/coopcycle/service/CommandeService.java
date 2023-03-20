@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
@@ -86,6 +87,15 @@ public class CommandeService {
     }
 
     /**
+     * Get all the commandes with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Flux<CommandeDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return commandeRepository.findAllWithEagerRelationships(pageable).map(commandeMapper::toDto);
+    }
+
+    /**
      * Returns the number of commandes available.
      * @return the number of entities in the database.
      *
@@ -103,7 +113,7 @@ public class CommandeService {
     @Transactional(readOnly = true)
     public Mono<CommandeDTO> findOne(Long id) {
         log.debug("Request to get Commande : {}", id);
-        return commandeRepository.findById(id).map(commandeMapper::toDto);
+        return commandeRepository.findOneWithEagerRelationships(id).map(commandeMapper::toDto);
     }
 
     /**

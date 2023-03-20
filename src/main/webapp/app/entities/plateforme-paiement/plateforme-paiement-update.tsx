@@ -138,7 +138,7 @@ export const PlateformePaiementUpdate = () => {
                 {commandes
                   ? commandes.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.creationDate}
                       </option>
                     ))
                   : null}

@@ -69,15 +69,6 @@ export const Commande = () => {
                 <th>
                   <Translate contentKey="coopcycleApp.commande.livreur">Livreur</Translate>
                 </th>
-                <th>
-                  <Translate contentKey="coopcycleApp.commande.client">Client</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="coopcycleApp.commande.restaurant">Restaurant</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="coopcycleApp.commande.livreur">Livreur</Translate>
-                </th>
                 <th />
               </tr>
             </thead>
@@ -92,12 +83,9 @@ export const Commande = () => {
                   <td>{commande.creationDate}</td>
                   <td>{commande.deliveryDate}</td>
                   <td>{commande.status}</td>
-                  <td>{commande.client}</td>
-                  <td>{commande.restaurant}</td>
-                  <td>{commande.livreur}</td>
-                  <td>{commande.client ? <Link to={`/client/${commande.client.id}`}>{commande.client.id}</Link> : ''}</td>
-                  <td>{commande.restaurant ? <Link to={`/restaurant/${commande.restaurant.id}`}>{commande.restaurant.id}</Link> : ''}</td>
-                  <td>{commande.livreur ? <Link to={`/livreur/${commande.livreur.id}`}>{commande.livreur.id}</Link> : ''}</td>
+                  <td>{commande.client ? <Link to={`/client/${commande.client.id}`}>{commande.client.name}</Link> : ''}</td>
+                  <td>{commande.restaurant ? <Link to={`/restaurant/${commande.restaurant.id}`}>{commande.restaurant.name}</Link> : ''}</td>
+                  <td>{commande.livreur ? <Link to={`/livreur/${commande.livreur.id}`}>{commande.livreur.name}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/commande/${commande.id}`} color="info" size="sm" data-cy="entityDetailsButton">

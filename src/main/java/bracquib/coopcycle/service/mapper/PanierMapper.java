@@ -13,17 +13,19 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface PanierMapper extends EntityMapper<PanierDTO, Panier> {
-    @Mapping(target = "client", source = "client", qualifiedByName = "clientId")
-    @Mapping(target = "commande", source = "commande", qualifiedByName = "commandeId")
+    @Mapping(target = "client", source = "client", qualifiedByName = "clientName")
+    @Mapping(target = "commande", source = "commande", qualifiedByName = "commandeCreationDate")
     PanierDTO toDto(Panier s);
 
-    @Named("clientId")
+    @Named("clientName")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    ClientDTO toDtoClientId(Client client);
+    @Mapping(target = "name", source = "name")
+    ClientDTO toDtoClientName(Client client);
 
-    @Named("commandeId")
+    @Named("commandeCreationDate")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    CommandeDTO toDtoCommandeId(Commande commande);
+    @Mapping(target = "creationDate", source = "creationDate")
+    CommandeDTO toDtoCommandeCreationDate(Commande commande);
 }

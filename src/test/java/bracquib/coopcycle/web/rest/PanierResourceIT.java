@@ -3,11 +3,13 @@ package bracquib.coopcycle.web.rest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.*;
 
 import bracquib.coopcycle.IntegrationTest;
 import bracquib.coopcycle.domain.Panier;
 import bracquib.coopcycle.repository.EntityManager;
 import bracquib.coopcycle.repository.PanierRepository;
+import bracquib.coopcycle.service.PanierService;
 import bracquib.coopcycle.service.dto.PanierDTO;
 import bracquib.coopcycle.service.mapper.PanierMapper;
 import java.time.Duration;
@@ -17,25 +19,28 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  * Integration tests for the {@link PanierResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureWebTestClient(timeout = IntegrationTest.DEFAULT_ENTITY_TIMEOUT)
 @WithMockUser
 class PanierResourceIT {
-
-    private static final String DEFAULT_CLIENT = "AAAAAAAAAA";
-    private static final String UPDATED_CLIENT = "BBBBBBBBBB";
-
-    private static final String DEFAULT_COMMANDE = "AAAAAAAAAA";
-    private static final String UPDATED_COMMANDE = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/paniers";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -46,8 +51,14 @@ class PanierResourceIT {
     @Autowired
     private PanierRepository panierRepository;
 
+    @Mock
+    private PanierRepository panierRepositoryMock;
+
     @Autowired
     private PanierMapper panierMapper;
+
+    @Mock
+    private PanierService panierServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -64,7 +75,7 @@ class PanierResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Panier createEntity(EntityManager em) {
-        Panier panier = new Panier().client(DEFAULT_CLIENT).commande(DEFAULT_COMMANDE);
+        Panier panier = new Panier();
         return panier;
     }
 
@@ -75,7 +86,7 @@ class PanierResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Panier createUpdatedEntity(EntityManager em) {
-        Panier panier = new Panier().client(UPDATED_CLIENT).commande(UPDATED_COMMANDE);
+        Panier panier = new Panier();
         return panier;
     }
 
@@ -116,8 +127,6 @@ class PanierResourceIT {
         List<Panier> panierList = panierRepository.findAll().collectList().block();
         assertThat(panierList).hasSize(databaseSizeBeforeCreate + 1);
         Panier testPanier = panierList.get(panierList.size() - 1);
-        assertThat(testPanier.getClient()).isEqualTo(DEFAULT_CLIENT);
-        assertThat(testPanier.getCommande()).isEqualTo(DEFAULT_COMMANDE);
     }
 
     @Test
@@ -144,50 +153,6 @@ class PanierResourceIT {
     }
 
     @Test
-    void checkClientIsRequired() throws Exception {
-        int databaseSizeBeforeTest = panierRepository.findAll().collectList().block().size();
-        // set the field null
-        panier.setClient(null);
-
-        // Create the Panier, which fails.
-        PanierDTO panierDTO = panierMapper.toDto(panier);
-
-        webTestClient
-            .post()
-            .uri(ENTITY_API_URL)
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(TestUtil.convertObjectToJsonBytes(panierDTO))
-            .exchange()
-            .expectStatus()
-            .isBadRequest();
-
-        List<Panier> panierList = panierRepository.findAll().collectList().block();
-        assertThat(panierList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    void checkCommandeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = panierRepository.findAll().collectList().block().size();
-        // set the field null
-        panier.setCommande(null);
-
-        // Create the Panier, which fails.
-        PanierDTO panierDTO = panierMapper.toDto(panier);
-
-        webTestClient
-            .post()
-            .uri(ENTITY_API_URL)
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(TestUtil.convertObjectToJsonBytes(panierDTO))
-            .exchange()
-            .expectStatus()
-            .isBadRequest();
-
-        List<Panier> panierList = panierRepository.findAll().collectList().block();
-        assertThat(panierList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
     void getAllPaniersAsStream() {
         // Initialize the database
         panierRepository.save(panier).block();
@@ -211,8 +176,6 @@ class PanierResourceIT {
         assertThat(panierList).isNotNull();
         assertThat(panierList).hasSize(1);
         Panier testPanier = panierList.get(0);
-        assertThat(testPanier.getClient()).isEqualTo(DEFAULT_CLIENT);
-        assertThat(testPanier.getCommande()).isEqualTo(DEFAULT_COMMANDE);
     }
 
     @Test
@@ -232,11 +195,24 @@ class PanierResourceIT {
             .contentType(MediaType.APPLICATION_JSON)
             .expectBody()
             .jsonPath("$.[*].id")
-            .value(hasItem(panier.getId().intValue()))
-            .jsonPath("$.[*].client")
-            .value(hasItem(DEFAULT_CLIENT))
-            .jsonPath("$.[*].commande")
-            .value(hasItem(DEFAULT_COMMANDE));
+            .value(hasItem(panier.getId().intValue()));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllPaniersWithEagerRelationshipsIsEnabled() {
+        when(panierServiceMock.findAllWithEagerRelationships(any())).thenReturn(Flux.empty());
+
+        webTestClient.get().uri(ENTITY_API_URL + "?eagerload=true").exchange().expectStatus().isOk();
+
+        verify(panierServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllPaniersWithEagerRelationshipsIsNotEnabled() {
+        when(panierServiceMock.findAllWithEagerRelationships(any())).thenReturn(Flux.empty());
+
+        webTestClient.get().uri(ENTITY_API_URL + "?eagerload=false").exchange().expectStatus().isOk();
+        verify(panierRepositoryMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test
@@ -256,11 +232,7 @@ class PanierResourceIT {
             .contentType(MediaType.APPLICATION_JSON)
             .expectBody()
             .jsonPath("$.id")
-            .value(is(panier.getId().intValue()))
-            .jsonPath("$.client")
-            .value(is(DEFAULT_CLIENT))
-            .jsonPath("$.commande")
-            .value(is(DEFAULT_COMMANDE));
+            .value(is(panier.getId().intValue()));
     }
 
     @Test
@@ -284,7 +256,6 @@ class PanierResourceIT {
 
         // Update the panier
         Panier updatedPanier = panierRepository.findById(panier.getId()).block();
-        updatedPanier.client(UPDATED_CLIENT).commande(UPDATED_COMMANDE);
         PanierDTO panierDTO = panierMapper.toDto(updatedPanier);
 
         webTestClient
@@ -300,8 +271,6 @@ class PanierResourceIT {
         List<Panier> panierList = panierRepository.findAll().collectList().block();
         assertThat(panierList).hasSize(databaseSizeBeforeUpdate);
         Panier testPanier = panierList.get(panierList.size() - 1);
-        assertThat(testPanier.getClient()).isEqualTo(UPDATED_CLIENT);
-        assertThat(testPanier.getCommande()).isEqualTo(UPDATED_COMMANDE);
     }
 
     @Test
@@ -397,8 +366,6 @@ class PanierResourceIT {
         List<Panier> panierList = panierRepository.findAll().collectList().block();
         assertThat(panierList).hasSize(databaseSizeBeforeUpdate);
         Panier testPanier = panierList.get(panierList.size() - 1);
-        assertThat(testPanier.getClient()).isEqualTo(DEFAULT_CLIENT);
-        assertThat(testPanier.getCommande()).isEqualTo(DEFAULT_COMMANDE);
     }
 
     @Test
@@ -411,8 +378,6 @@ class PanierResourceIT {
         // Update the panier using partial update
         Panier partialUpdatedPanier = new Panier();
         partialUpdatedPanier.setId(panier.getId());
-
-        partialUpdatedPanier.client(UPDATED_CLIENT).commande(UPDATED_COMMANDE);
 
         webTestClient
             .patch()
@@ -427,8 +392,6 @@ class PanierResourceIT {
         List<Panier> panierList = panierRepository.findAll().collectList().block();
         assertThat(panierList).hasSize(databaseSizeBeforeUpdate);
         Panier testPanier = panierList.get(panierList.size() - 1);
-        assertThat(testPanier.getClient()).isEqualTo(UPDATED_CLIENT);
-        assertThat(testPanier.getCommande()).isEqualTo(UPDATED_COMMANDE);
     }
 
     @Test

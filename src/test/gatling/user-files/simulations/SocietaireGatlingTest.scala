@@ -71,9 +71,9 @@ class SocietaireGatlingTest extends Simulation {
             .post("/api/societaires")
             .headers(headers_http_authenticated)
             .body(StringBody("""{
-                "client":"SAMPLE_TEXT"
-                , "restaurant":"SAMPLE_TEXT"
-                , "livreur":"SAMPLE_TEXT"
+                "nameclient":"SAMPLE_TEXT"
+                , "namerestaurant":"SAMPLE_TEXT"
+                , "namelivreur":"SAMPLE_TEXT"
                 }""")).asJson
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_societaire_url"))).exitHereIfFailed

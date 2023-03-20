@@ -53,7 +53,7 @@ export const PlateformePaiementDetail = () => {
           <dt>
             <Translate contentKey="coopcycleApp.plateformePaiement.commande">Commande</Translate>
           </dt>
-          <dd>{plateformePaiementEntity.commande ? plateformePaiementEntity.commande.id : ''}</dd>
+          <dd>{plateformePaiementEntity.commande ? plateformePaiementEntity.commande.creationDate : ''}</dd>
         </dl>
         <Button tag={Link} to="/plateforme-paiement" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

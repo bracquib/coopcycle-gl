@@ -163,10 +163,11 @@ public class CommandeResource {
     /**
      * {@code GET  /commandes} : get all the commandes.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of commandes in body.
      */
     @GetMapping("/commandes")
-    public Mono<List<CommandeDTO>> getAllCommandes() {
+    public Mono<List<CommandeDTO>> getAllCommandes(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Commandes");
         return commandeService.findAll().collectList();
     }

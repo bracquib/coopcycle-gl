@@ -18,20 +18,6 @@
       "fieldName": "status",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "client",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "restaurant",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "livreur",
-      "fieldType": "String"
     }
   ],
   "fluentMethods": true,
@@ -41,16 +27,19 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityField": "name",
       "otherEntityName": "client",
       "relationshipName": "client",
       "relationshipType": "many-to-one"
     },
     {
+      "otherEntityField": "name",
       "otherEntityName": "restaurant",
       "relationshipName": "restaurant",
       "relationshipType": "many-to-one"
     },
     {
+      "otherEntityField": "name",
       "otherEntityName": "livreur",
       "relationshipName": "livreur",
       "relationshipType": "many-to-one"

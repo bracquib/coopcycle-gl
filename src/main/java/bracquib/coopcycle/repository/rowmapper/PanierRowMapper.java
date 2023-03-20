@@ -25,8 +25,6 @@ public class PanierRowMapper implements BiFunction<Row, String, Panier> {
     public Panier apply(Row row, String prefix) {
         Panier entity = new Panier();
         entity.setId(converter.fromRow(row, prefix + "_id", Long.class));
-        entity.setClient(converter.fromRow(row, prefix + "_client", String.class));
-        entity.setCommande(converter.fromRow(row, prefix + "_commande", String.class));
         entity.setClientId(converter.fromRow(row, prefix + "_client_id", Long.class));
         entity.setCommandeId(converter.fromRow(row, prefix + "_commande_id", Long.class));
         return entity;

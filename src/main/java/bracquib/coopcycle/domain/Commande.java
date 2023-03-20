@@ -31,17 +31,6 @@ public class Commande implements Serializable {
     @Column("status")
     private String status;
 
-    @NotNull(message = "must not be null")
-    @Column("client")
-    private String client;
-
-    @NotNull(message = "must not be null")
-    @Column("restaurant")
-    private String restaurant;
-
-    @Column("livreur")
-    private String livreur;
-
     @Transient
     private Client client;
 
@@ -112,45 +101,6 @@ public class Commande implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getClient() {
-        return this.client;
-    }
-
-    public Commande client(String client) {
-        this.setClient(client);
-        return this;
-    }
-
-    public void setClient(String client) {
-        this.client = client;
-    }
-
-    public String getRestaurant() {
-        return this.restaurant;
-    }
-
-    public Commande restaurant(String restaurant) {
-        this.setRestaurant(restaurant);
-        return this;
-    }
-
-    public void setRestaurant(String restaurant) {
-        this.restaurant = restaurant;
-    }
-
-    public String getLivreur() {
-        return this.livreur;
-    }
-
-    public Commande livreur(String livreur) {
-        this.setLivreur(livreur);
-        return this;
-    }
-
-    public void setLivreur(String livreur) {
-        this.livreur = livreur;
     }
 
     public Client getClient() {
@@ -246,9 +196,6 @@ public class Commande implements Serializable {
             ", creationDate='" + getCreationDate() + "'" +
             ", deliveryDate='" + getDeliveryDate() + "'" +
             ", status='" + getStatus() + "'" +
-            ", client='" + getClient() + "'" +
-            ", restaurant='" + getRestaurant() + "'" +
-            ", livreur='" + getLivreur() + "'" +
             "}";
     }
 }

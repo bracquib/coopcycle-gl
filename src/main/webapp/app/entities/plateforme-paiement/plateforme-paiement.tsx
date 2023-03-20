@@ -86,7 +86,7 @@ export const PlateformePaiement = () => {
                   <td>{plateformePaiement.description}</td>
                   <td>
                     {plateformePaiement.commande ? (
-                      <Link to={`/commande/${plateformePaiement.commande.id}`}>{plateformePaiement.commande.id}</Link>
+                      <Link to={`/commande/${plateformePaiement.commande.id}`}>{plateformePaiement.commande.creationDate}</Link>
                     ) : (
                       ''
                     )}

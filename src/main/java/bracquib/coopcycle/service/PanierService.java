@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
@@ -86,6 +87,15 @@ public class PanierService {
     }
 
     /**
+     * Get all the paniers with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Flux<PanierDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return panierRepository.findAllWithEagerRelationships(pageable).map(panierMapper::toDto);
+    }
+
+    /**
      * Returns the number of paniers available.
      * @return the number of entities in the database.
      *
@@ -103,7 +113,7 @@ public class PanierService {
     @Transactional(readOnly = true)
     public Mono<PanierDTO> findOne(Long id) {
         log.debug("Request to get Panier : {}", id);
-        return panierRepository.findById(id).map(panierMapper::toDto);
+        return panierRepository.findOneWithEagerRelationships(id).map(panierMapper::toDto);
     }
 
     /**

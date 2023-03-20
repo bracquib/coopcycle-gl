@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
@@ -86,6 +87,15 @@ public class SocietaireService {
     }
 
     /**
+     * Get all the societaires with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Flux<SocietaireDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return societaireRepository.findAllWithEagerRelationships(pageable).map(societaireMapper::toDto);
+    }
+
+    /**
      * Returns the number of societaires available.
      * @return the number of entities in the database.
      *
@@ -103,7 +113,7 @@ public class SocietaireService {
     @Transactional(readOnly = true)
     public Mono<SocietaireDTO> findOne(Long id) {
         log.debug("Request to get Societaire : {}", id);
-        return societaireRepository.findById(id).map(societaireMapper::toDto);
+        return societaireRepository.findOneWithEagerRelationships(id).map(societaireMapper::toDto);
     }
 
     /**

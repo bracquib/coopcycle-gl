@@ -3,11 +3,13 @@ package bracquib.coopcycle.web.rest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.*;
 
 import bracquib.coopcycle.IntegrationTest;
 import bracquib.coopcycle.domain.Commande;
 import bracquib.coopcycle.repository.CommandeRepository;
 import bracquib.coopcycle.repository.EntityManager;
+import bracquib.coopcycle.service.CommandeService;
 import bracquib.coopcycle.service.dto.CommandeDTO;
 import bracquib.coopcycle.service.mapper.CommandeMapper;
 import java.time.Duration;
@@ -17,16 +19,25 @@ import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  * Integration tests for the {@link CommandeResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureWebTestClient(timeout = IntegrationTest.DEFAULT_ENTITY_TIMEOUT)
 @WithMockUser
 class CommandeResourceIT {
@@ -40,15 +51,6 @@ class CommandeResourceIT {
     private static final String DEFAULT_STATUS = "AAAAAAAAAA";
     private static final String UPDATED_STATUS = "BBBBBBBBBB";
 
-    private static final String DEFAULT_CLIENT = "AAAAAAAAAA";
-    private static final String UPDATED_CLIENT = "BBBBBBBBBB";
-
-    private static final String DEFAULT_RESTAURANT = "AAAAAAAAAA";
-    private static final String UPDATED_RESTAURANT = "BBBBBBBBBB";
-
-    private static final String DEFAULT_LIVREUR = "AAAAAAAAAA";
-    private static final String UPDATED_LIVREUR = "BBBBBBBBBB";
-
     private static final String ENTITY_API_URL = "/api/commandes";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -58,8 +60,14 @@ class CommandeResourceIT {
     @Autowired
     private CommandeRepository commandeRepository;
 
+    @Mock
+    private CommandeRepository commandeRepositoryMock;
+
     @Autowired
     private CommandeMapper commandeMapper;
+
+    @Mock
+    private CommandeService commandeServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -76,13 +84,7 @@ class CommandeResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Commande createEntity(EntityManager em) {
-        Commande commande = new Commande()
-            .creationDate(DEFAULT_CREATION_DATE)
-            .deliveryDate(DEFAULT_DELIVERY_DATE)
-            .status(DEFAULT_STATUS)
-            .client(DEFAULT_CLIENT)
-            .restaurant(DEFAULT_RESTAURANT)
-            .livreur(DEFAULT_LIVREUR);
+        Commande commande = new Commande().creationDate(DEFAULT_CREATION_DATE).deliveryDate(DEFAULT_DELIVERY_DATE).status(DEFAULT_STATUS);
         return commande;
     }
 
@@ -93,13 +95,7 @@ class CommandeResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Commande createUpdatedEntity(EntityManager em) {
-        Commande commande = new Commande()
-            .creationDate(UPDATED_CREATION_DATE)
-            .deliveryDate(UPDATED_DELIVERY_DATE)
-            .status(UPDATED_STATUS)
-            .client(UPDATED_CLIENT)
-            .restaurant(UPDATED_RESTAURANT)
-            .livreur(UPDATED_LIVREUR);
+        Commande commande = new Commande().creationDate(UPDATED_CREATION_DATE).deliveryDate(UPDATED_DELIVERY_DATE).status(UPDATED_STATUS);
         return commande;
     }
 
@@ -143,9 +139,6 @@ class CommandeResourceIT {
         assertThat(testCommande.getCreationDate()).isEqualTo(DEFAULT_CREATION_DATE);
         assertThat(testCommande.getDeliveryDate()).isEqualTo(DEFAULT_DELIVERY_DATE);
         assertThat(testCommande.getStatus()).isEqualTo(DEFAULT_STATUS);
-        assertThat(testCommande.getClient()).isEqualTo(DEFAULT_CLIENT);
-        assertThat(testCommande.getRestaurant()).isEqualTo(DEFAULT_RESTAURANT);
-        assertThat(testCommande.getLivreur()).isEqualTo(DEFAULT_LIVREUR);
     }
 
     @Test
@@ -216,50 +209,6 @@ class CommandeResourceIT {
     }
 
     @Test
-    void checkClientIsRequired() throws Exception {
-        int databaseSizeBeforeTest = commandeRepository.findAll().collectList().block().size();
-        // set the field null
-        commande.setClient(null);
-
-        // Create the Commande, which fails.
-        CommandeDTO commandeDTO = commandeMapper.toDto(commande);
-
-        webTestClient
-            .post()
-            .uri(ENTITY_API_URL)
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(TestUtil.convertObjectToJsonBytes(commandeDTO))
-            .exchange()
-            .expectStatus()
-            .isBadRequest();
-
-        List<Commande> commandeList = commandeRepository.findAll().collectList().block();
-        assertThat(commandeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    void checkRestaurantIsRequired() throws Exception {
-        int databaseSizeBeforeTest = commandeRepository.findAll().collectList().block().size();
-        // set the field null
-        commande.setRestaurant(null);
-
-        // Create the Commande, which fails.
-        CommandeDTO commandeDTO = commandeMapper.toDto(commande);
-
-        webTestClient
-            .post()
-            .uri(ENTITY_API_URL)
-            .contentType(MediaType.APPLICATION_JSON)
-            .bodyValue(TestUtil.convertObjectToJsonBytes(commandeDTO))
-            .exchange()
-            .expectStatus()
-            .isBadRequest();
-
-        List<Commande> commandeList = commandeRepository.findAll().collectList().block();
-        assertThat(commandeList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
     void getAllCommandesAsStream() {
         // Initialize the database
         commandeRepository.save(commande).block();
@@ -286,9 +235,6 @@ class CommandeResourceIT {
         assertThat(testCommande.getCreationDate()).isEqualTo(DEFAULT_CREATION_DATE);
         assertThat(testCommande.getDeliveryDate()).isEqualTo(DEFAULT_DELIVERY_DATE);
         assertThat(testCommande.getStatus()).isEqualTo(DEFAULT_STATUS);
-        assertThat(testCommande.getClient()).isEqualTo(DEFAULT_CLIENT);
-        assertThat(testCommande.getRestaurant()).isEqualTo(DEFAULT_RESTAURANT);
-        assertThat(testCommande.getLivreur()).isEqualTo(DEFAULT_LIVREUR);
     }
 
     @Test
@@ -314,13 +260,24 @@ class CommandeResourceIT {
             .jsonPath("$.[*].deliveryDate")
             .value(hasItem(DEFAULT_DELIVERY_DATE))
             .jsonPath("$.[*].status")
-            .value(hasItem(DEFAULT_STATUS))
-            .jsonPath("$.[*].client")
-            .value(hasItem(DEFAULT_CLIENT))
-            .jsonPath("$.[*].restaurant")
-            .value(hasItem(DEFAULT_RESTAURANT))
-            .jsonPath("$.[*].livreur")
-            .value(hasItem(DEFAULT_LIVREUR));
+            .value(hasItem(DEFAULT_STATUS));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllCommandesWithEagerRelationshipsIsEnabled() {
+        when(commandeServiceMock.findAllWithEagerRelationships(any())).thenReturn(Flux.empty());
+
+        webTestClient.get().uri(ENTITY_API_URL + "?eagerload=true").exchange().expectStatus().isOk();
+
+        verify(commandeServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllCommandesWithEagerRelationshipsIsNotEnabled() {
+        when(commandeServiceMock.findAllWithEagerRelationships(any())).thenReturn(Flux.empty());
+
+        webTestClient.get().uri(ENTITY_API_URL + "?eagerload=false").exchange().expectStatus().isOk();
+        verify(commandeRepositoryMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test
@@ -346,13 +303,7 @@ class CommandeResourceIT {
             .jsonPath("$.deliveryDate")
             .value(is(DEFAULT_DELIVERY_DATE))
             .jsonPath("$.status")
-            .value(is(DEFAULT_STATUS))
-            .jsonPath("$.client")
-            .value(is(DEFAULT_CLIENT))
-            .jsonPath("$.restaurant")
-            .value(is(DEFAULT_RESTAURANT))
-            .jsonPath("$.livreur")
-            .value(is(DEFAULT_LIVREUR));
+            .value(is(DEFAULT_STATUS));
     }
 
     @Test
@@ -376,13 +327,7 @@ class CommandeResourceIT {
 
         // Update the commande
         Commande updatedCommande = commandeRepository.findById(commande.getId()).block();
-        updatedCommande
-            .creationDate(UPDATED_CREATION_DATE)
-            .deliveryDate(UPDATED_DELIVERY_DATE)
-            .status(UPDATED_STATUS)
-            .client(UPDATED_CLIENT)
-            .restaurant(UPDATED_RESTAURANT)
-            .livreur(UPDATED_LIVREUR);
+        updatedCommande.creationDate(UPDATED_CREATION_DATE).deliveryDate(UPDATED_DELIVERY_DATE).status(UPDATED_STATUS);
         CommandeDTO commandeDTO = commandeMapper.toDto(updatedCommande);
 
         webTestClient
@@ -401,9 +346,6 @@ class CommandeResourceIT {
         assertThat(testCommande.getCreationDate()).isEqualTo(UPDATED_CREATION_DATE);
         assertThat(testCommande.getDeliveryDate()).isEqualTo(UPDATED_DELIVERY_DATE);
         assertThat(testCommande.getStatus()).isEqualTo(UPDATED_STATUS);
-        assertThat(testCommande.getClient()).isEqualTo(UPDATED_CLIENT);
-        assertThat(testCommande.getRestaurant()).isEqualTo(UPDATED_RESTAURANT);
-        assertThat(testCommande.getLivreur()).isEqualTo(UPDATED_LIVREUR);
     }
 
     @Test
@@ -486,7 +428,7 @@ class CommandeResourceIT {
         Commande partialUpdatedCommande = new Commande();
         partialUpdatedCommande.setId(commande.getId());
 
-        partialUpdatedCommande.creationDate(UPDATED_CREATION_DATE).client(UPDATED_CLIENT).restaurant(UPDATED_RESTAURANT);
+        partialUpdatedCommande.creationDate(UPDATED_CREATION_DATE);
 
         webTestClient
             .patch()
@@ -504,9 +446,6 @@ class CommandeResourceIT {
         assertThat(testCommande.getCreationDate()).isEqualTo(UPDATED_CREATION_DATE);
         assertThat(testCommande.getDeliveryDate()).isEqualTo(DEFAULT_DELIVERY_DATE);
         assertThat(testCommande.getStatus()).isEqualTo(DEFAULT_STATUS);
-        assertThat(testCommande.getClient()).isEqualTo(UPDATED_CLIENT);
-        assertThat(testCommande.getRestaurant()).isEqualTo(UPDATED_RESTAURANT);
-        assertThat(testCommande.getLivreur()).isEqualTo(DEFAULT_LIVREUR);
     }
 
     @Test
@@ -520,13 +459,7 @@ class CommandeResourceIT {
         Commande partialUpdatedCommande = new Commande();
         partialUpdatedCommande.setId(commande.getId());
 
-        partialUpdatedCommande
-            .creationDate(UPDATED_CREATION_DATE)
-            .deliveryDate(UPDATED_DELIVERY_DATE)
-            .status(UPDATED_STATUS)
-            .client(UPDATED_CLIENT)
-            .restaurant(UPDATED_RESTAURANT)
-            .livreur(UPDATED_LIVREUR);
+        partialUpdatedCommande.creationDate(UPDATED_CREATION_DATE).deliveryDate(UPDATED_DELIVERY_DATE).status(UPDATED_STATUS);
 
         webTestClient
             .patch()
@@ -544,9 +477,6 @@ class CommandeResourceIT {
         assertThat(testCommande.getCreationDate()).isEqualTo(UPDATED_CREATION_DATE);
         assertThat(testCommande.getDeliveryDate()).isEqualTo(UPDATED_DELIVERY_DATE);
         assertThat(testCommande.getStatus()).isEqualTo(UPDATED_STATUS);
-        assertThat(testCommande.getClient()).isEqualTo(UPDATED_CLIENT);
-        assertThat(testCommande.getRestaurant()).isEqualTo(UPDATED_RESTAURANT);
-        assertThat(testCommande.getLivreur()).isEqualTo(UPDATED_LIVREUR);
     }
 
     @Test

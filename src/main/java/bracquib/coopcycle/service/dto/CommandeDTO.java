@@ -20,14 +20,6 @@ public class CommandeDTO implements Serializable {
     @NotNull(message = "must not be null")
     private String status;
 
-    @NotNull(message = "must not be null")
-    private String client;
-
-    @NotNull(message = "must not be null")
-    private String restaurant;
-
-    private String livreur;
-
     private ClientDTO client;
 
     private RestaurantDTO restaurant;
@@ -64,30 +56,6 @@ public class CommandeDTO implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getClient() {
-        return client;
-    }
-
-    public void setClient(String client) {
-        this.client = client;
-    }
-
-    public String getRestaurant() {
-        return restaurant;
-    }
-
-    public void setRestaurant(String restaurant) {
-        this.restaurant = restaurant;
-    }
-
-    public String getLivreur() {
-        return livreur;
-    }
-
-    public void setLivreur(String livreur) {
-        this.livreur = livreur;
     }
 
     public ClientDTO getClient() {
@@ -143,9 +111,6 @@ public class CommandeDTO implements Serializable {
             ", creationDate='" + getCreationDate() + "'" +
             ", deliveryDate='" + getDeliveryDate() + "'" +
             ", status='" + getStatus() + "'" +
-            ", client='" + getClient() + "'" +
-            ", restaurant='" + getRestaurant() + "'" +
-            ", livreur='" + getLivreur() + "'" +
             ", client=" + getClient() +
             ", restaurant=" + getRestaurant() +
             ", livreur=" + getLivreur() +

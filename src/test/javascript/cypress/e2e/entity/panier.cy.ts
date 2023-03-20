@@ -15,7 +15,7 @@ describe('Panier e2e test', () => {
   const panierPageUrlPattern = new RegExp('/panier(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  const panierSample = { client: 'Handmade 24 Planner', commande: 'backing Plastic' };
+  const panierSample = {};
 
   let panier;
 
@@ -159,10 +159,6 @@ describe('Panier e2e test', () => {
     });
 
     it('should create an instance of Panier', () => {
-      cy.get(`[data-cy="client"]`).type('Analyst target Visionary').should('have.value', 'Analyst target Visionary');
-
-      cy.get(`[data-cy="commande"]`).type('bifurcated Upgradable IB').should('have.value', 'bifurcated Upgradable IB');
-
       cy.get(entityCreateSaveButtonSelector).click();
 
       cy.wait('@postEntityRequest').then(({ response }) => {

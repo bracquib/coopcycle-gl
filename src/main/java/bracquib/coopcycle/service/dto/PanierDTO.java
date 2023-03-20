@@ -2,7 +2,6 @@ package bracquib.coopcycle.service.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.validation.constraints.*;
 
 /**
  * A DTO for the {@link bracquib.coopcycle.domain.Panier} entity.
@@ -11,12 +10,6 @@ import javax.validation.constraints.*;
 public class PanierDTO implements Serializable {
 
     private Long id;
-
-    @NotNull(message = "must not be null")
-    private String client;
-
-    @NotNull(message = "must not be null")
-    private String commande;
 
     private ClientDTO client;
 
@@ -28,22 +21,6 @@ public class PanierDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getClient() {
-        return client;
-    }
-
-    public void setClient(String client) {
-        this.client = client;
-    }
-
-    public String getCommande() {
-        return commande;
-    }
-
-    public void setCommande(String commande) {
-        this.commande = commande;
     }
 
     public ClientDTO getClient() {
@@ -88,8 +65,6 @@ public class PanierDTO implements Serializable {
     public String toString() {
         return "PanierDTO{" +
             "id=" + getId() +
-            ", client='" + getClient() + "'" +
-            ", commande='" + getCommande() + "'" +
             ", client=" + getClient() +
             ", commande=" + getCommande() +
             "}";

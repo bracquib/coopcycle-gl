@@ -4,9 +4,9 @@ import { ILivreur } from 'app/shared/model/livreur.model';
 
 export interface ISocietaire {
   id?: number;
-  client?: string;
-  restaurant?: string | null;
-  livreur?: string | null;
+  nameclient?: string;
+  namerestaurant?: string | null;
+  namelivreur?: string | null;
   client?: IClient | null;
   restaurant?: IRestaurant | null;
   livreur?: ILivreur | null;

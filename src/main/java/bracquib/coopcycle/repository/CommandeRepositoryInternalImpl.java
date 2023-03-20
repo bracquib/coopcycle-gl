@@ -119,6 +119,21 @@ class CommandeRepositoryInternalImpl extends SimpleR2dbcRepository<Commande, Lon
         return createQuery(null, whereClause).one();
     }
 
+    @Override
+    public Mono<Commande> findOneWithEagerRelationships(Long id) {
+        return findById(id);
+    }
+
+    @Override
+    public Flux<Commande> findAllWithEagerRelationships() {
+        return findAll();
+    }
+
+    @Override
+    public Flux<Commande> findAllWithEagerRelationships(Pageable page) {
+        return findAllBy(page);
+    }
+
     private Commande process(Row row, RowMetadata metadata) {
         Commande entity = commandeMapper.apply(row, "e");
         entity.setClient(clientMapper.apply(row, "client"));

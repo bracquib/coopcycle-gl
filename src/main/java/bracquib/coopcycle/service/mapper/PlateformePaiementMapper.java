@@ -11,11 +11,12 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface PlateformePaiementMapper extends EntityMapper<PlateformePaiementDTO, PlateformePaiement> {
-    @Mapping(target = "commande", source = "commande", qualifiedByName = "commandeId")
+    @Mapping(target = "commande", source = "commande", qualifiedByName = "commandeCreationDate")
     PlateformePaiementDTO toDto(PlateformePaiement s);
 
-    @Named("commandeId")
+    @Named("commandeCreationDate")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    CommandeDTO toDtoCommandeId(Commande commande);
+    @Mapping(target = "creationDate", source = "creationDate")
+    CommandeDTO toDtoCommandeCreationDate(Commande commande);
 }

@@ -57,12 +57,6 @@ export const Panier = () => {
                 <th>
                   <Translate contentKey="coopcycleApp.panier.commande">Commande</Translate>
                 </th>
-                <th>
-                  <Translate contentKey="coopcycleApp.panier.client">Client</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="coopcycleApp.panier.commande">Commande</Translate>
-                </th>
                 <th />
               </tr>
             </thead>
@@ -74,10 +68,8 @@ export const Panier = () => {
                       {panier.id}
                     </Button>
                   </td>
-                  <td>{panier.client}</td>
-                  <td>{panier.commande}</td>
-                  <td>{panier.client ? <Link to={`/client/${panier.client.id}`}>{panier.client.id}</Link> : ''}</td>
-                  <td>{panier.commande ? <Link to={`/commande/${panier.commande.id}`}>{panier.commande.id}</Link> : ''}</td>
+                  <td>{panier.client ? <Link to={`/client/${panier.client.id}`}>{panier.client.name}</Link> : ''}</td>
+                  <td>{panier.commande ? <Link to={`/commande/${panier.commande.id}`}>{panier.commande.creationDate}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/panier/${panier.id}`} color="info" size="sm" data-cy="entityDetailsButton">

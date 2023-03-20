@@ -15,12 +15,7 @@ describe('Commande e2e test', () => {
   const commandePageUrlPattern = new RegExp('/commande(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  const commandeSample = {
-    creationDate: 'relationships',
-    status: 'mobile Health',
-    client: 'Future Coves Cotton',
-    restaurant: 'Maryland Circle Auto',
-  };
+  const commandeSample = { creationDate: 'Unbranded monitor indigo', status: 'strategic Dollar 5th' };
 
   let commande;
 
@@ -169,12 +164,6 @@ describe('Commande e2e test', () => {
       cy.get(`[data-cy="deliveryDate"]`).type('International frictionless').should('have.value', 'International frictionless');
 
       cy.get(`[data-cy="status"]`).type('Landing bluetooth Fish').should('have.value', 'Landing bluetooth Fish');
-
-      cy.get(`[data-cy="client"]`).type('Unbranded monitor indigo').should('have.value', 'Unbranded monitor indigo');
-
-      cy.get(`[data-cy="restaurant"]`).type('strategic Dollar 5th').should('have.value', 'strategic Dollar 5th');
-
-      cy.get(`[data-cy="livreur"]`).type('instruction payment olive').should('have.value', 'instruction payment olive');
 
       cy.get(entityCreateSaveButtonSelector).click();
 

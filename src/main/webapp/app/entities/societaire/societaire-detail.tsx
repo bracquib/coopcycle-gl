@@ -33,35 +33,35 @@ export const SocietaireDetail = () => {
           </dt>
           <dd>{societaireEntity.id}</dd>
           <dt>
-            <span id="client">
-              <Translate contentKey="coopcycleApp.societaire.client">Client</Translate>
+            <span id="nameclient">
+              <Translate contentKey="coopcycleApp.societaire.nameclient">Nameclient</Translate>
             </span>
           </dt>
-          <dd>{societaireEntity.client}</dd>
+          <dd>{societaireEntity.nameclient}</dd>
           <dt>
-            <span id="restaurant">
-              <Translate contentKey="coopcycleApp.societaire.restaurant">Restaurant</Translate>
+            <span id="namerestaurant">
+              <Translate contentKey="coopcycleApp.societaire.namerestaurant">Namerestaurant</Translate>
             </span>
           </dt>
-          <dd>{societaireEntity.restaurant}</dd>
+          <dd>{societaireEntity.namerestaurant}</dd>
           <dt>
-            <span id="livreur">
-              <Translate contentKey="coopcycleApp.societaire.livreur">Livreur</Translate>
+            <span id="namelivreur">
+              <Translate contentKey="coopcycleApp.societaire.namelivreur">Namelivreur</Translate>
             </span>
           </dt>
-          <dd>{societaireEntity.livreur}</dd>
+          <dd>{societaireEntity.namelivreur}</dd>
           <dt>
             <Translate contentKey="coopcycleApp.societaire.client">Client</Translate>
           </dt>
-          <dd>{societaireEntity.client ? societaireEntity.client.id : ''}</dd>
+          <dd>{societaireEntity.client ? societaireEntity.client.name : ''}</dd>
           <dt>
             <Translate contentKey="coopcycleApp.societaire.restaurant">Restaurant</Translate>
           </dt>
-          <dd>{societaireEntity.restaurant ? societaireEntity.restaurant.id : ''}</dd>
+          <dd>{societaireEntity.restaurant ? societaireEntity.restaurant.name : ''}</dd>
           <dt>
             <Translate contentKey="coopcycleApp.societaire.livreur">Livreur</Translate>
           </dt>
-          <dd>{societaireEntity.livreur ? societaireEntity.livreur.id : ''}</dd>
+          <dd>{societaireEntity.livreur ? societaireEntity.livreur.name : ''}</dd>
         </dl>
         <Button tag={Link} to="/societaire" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

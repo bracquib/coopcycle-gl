@@ -28,6 +28,7 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityField": "creationDate",
       "otherEntityName": "commande",
       "relationshipName": "commande",
       "relationshipType": "many-to-one"

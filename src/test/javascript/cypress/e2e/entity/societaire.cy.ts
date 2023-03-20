@@ -15,7 +15,7 @@ describe('Societaire e2e test', () => {
   const societairePageUrlPattern = new RegExp('/societaire(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  const societaireSample = { client: 'United violet' };
+  const societaireSample = { nameclient: 'United violet' };
 
   let societaire;
 
@@ -159,11 +159,11 @@ describe('Societaire e2e test', () => {
     });
 
     it('should create an instance of Societaire', () => {
-      cy.get(`[data-cy="client"]`).type('flexibility North users').should('have.value', 'flexibility North users');
+      cy.get(`[data-cy="nameclient"]`).type('flexibility North users').should('have.value', 'flexibility North users');
 
-      cy.get(`[data-cy="restaurant"]`).type('Pound Rufiyaa Frozen').should('have.value', 'Pound Rufiyaa Frozen');
+      cy.get(`[data-cy="namerestaurant"]`).type('Pound Rufiyaa Frozen').should('have.value', 'Pound Rufiyaa Frozen');
 
-      cy.get(`[data-cy="livreur"]`).type('Kansas Point Movies').should('have.value', 'Kansas Point Movies');
+      cy.get(`[data-cy="namelivreur"]`).type('Kansas Point Movies').should('have.value', 'Kansas Point Movies');
 
       cy.get(entityCreateSaveButtonSelector).click();
 

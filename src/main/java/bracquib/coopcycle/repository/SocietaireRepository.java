@@ -15,6 +15,15 @@ import reactor.core.publisher.Mono;
 @SuppressWarnings("unused")
 @Repository
 public interface SocietaireRepository extends ReactiveCrudRepository<Societaire, Long>, SocietaireRepositoryInternal {
+    @Override
+    Mono<Societaire> findOneWithEagerRelationships(Long id);
+
+    @Override
+    Flux<Societaire> findAllWithEagerRelationships();
+
+    @Override
+    Flux<Societaire> findAllWithEagerRelationships(Pageable page);
+
     @Query("SELECT * FROM societaire entity WHERE entity.client_id = :id")
     Flux<Societaire> findByClient(Long id);
 
@@ -57,4 +66,11 @@ interface SocietaireRepositoryInternal {
     // this is not supported at the moment because of https://github.com/jhipster/generator-jhipster/issues/18269
     // Flux<Societaire> findAllBy(Pageable pageable, Criteria criteria);
 
+    Mono<Societaire> findOneWithEagerRelationships(Long id);
+
+    Flux<Societaire> findAllWithEagerRelationships();
+
+    Flux<Societaire> findAllWithEagerRelationships(Pageable page);
+
+    Mono<Void> deleteById(Long id);
 }

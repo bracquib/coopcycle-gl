@@ -3,8 +3,6 @@ import { ICommande } from 'app/shared/model/commande.model';
 
 export interface IPanier {
   id?: number;
-  client?: string;
-  commande?: string;
   client?: IClient | null;
   commande?: ICommande | null;
 }
